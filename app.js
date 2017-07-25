@@ -1,5 +1,7 @@
-const render = require('./models');
+const argv = require('minimist')(process.argv.slice(2));
+const getData = require('./controls');
 
-const data = { user: 'you' };
 
-render(1, 'pug', data);
+console.log(argv);
+
+// getData('http://apidpc.mts.dev.qsupport.ru/api/1.0/products/Tariff?Regions.Alias=msk&MarketingProduct.Alias=smart_bezlimitishhe&fields=*');

@@ -14,23 +14,26 @@ const render = async (fileName, engine, data) => {
       throw new TypeError('filename must be a string');
     }
 
-    const viewsPath = path.join(config.get('views.pug'), `${fileName}.pug`);
-    const outputPath = path.join(config.get('output'), `${fileName}.html`);
-    const writeStream = fs.createWriteStream(outputPath);
-    writeStream.on('finish', () => console.log('render complete'));
+    const viewsFilePath = path.join(config.get('views.pug'), `${fileName}.pug`);
+    const outputFilePath = path.join(config.get('output'), `${fileName}.html`);
 
     try {
       // compile html string
-      const htmlString = await cons[engine](viewsPath, {
+      const htmlString = await cons[engine](viewsFilePath, {
         data,
         self: true,
       });
 
       // write stream asynchroniusly
+      const writeStream = fs.createWriteStream(outputFilePath);
       promisifyStream(writeStream);
+
+      writeStream.on('finish', () => console.log('render complete'));
+
       await writeStream.write(htmlString);
       writeStream.end();
     } catch (error) {
+      // ENOENT catched here as well
       logger.error(error);
     }
   } catch (error) {

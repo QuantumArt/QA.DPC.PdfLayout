@@ -1,8 +1,10 @@
+const path = require('path');
+
 module.exports = {
   views: {
-    pug: './views/pug/',
-    handlebars: './views/handlebars/',
+    pug: path.resolve('views', 'pug'),
+    handlebars: path.resolve('views', 'handlebars'),
   },
-  output: './output/',
-  logs: './logs/',
+  output: path.resolve('output'),
+  logs: path.resolve('logs'),
 };
