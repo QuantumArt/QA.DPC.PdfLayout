@@ -1,25 +1,36 @@
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash/lang');
 const config = require('config');
 const cons = require('consolidate');
 const promisifyStream = require('stream-to-promise');
 const logger = require('../logger');
 
-const render = async (fileName, engine, data) => {
+const render = async (tariffName, data, engine) => {
   try {
     // check if arguments correct
-    if (typeof fileName !== 'string') {
+    if (!_.isString(tariffName)) {
+      throw new TypeError('tariffName must be a string');
+    }
+    if (!_.isString(engine)) {
       throw new TypeError('engine must be a string');
-    } else if (typeof engine !== 'string') {
-      throw new TypeError('filename must be a string');
     }
 
-    const viewsFilePath = path.join(config.get('views.pug'), `${fileName}.pug`);
-    const outputFilePath = path.join(config.get('output'), `${fileName}.html`);
+    const engineExtension = config.get(`engines.${engine}.ext`);
+    const enginesFilePath = path.join(
+      config.get(`engines.${engine}.path`),
+      tariffName,
+      `index.${engineExtension}`,
+    );
+    const outputFilePath = path.join(
+      config.get('output'),
+      tariffName,
+      'index.html',
+    );
 
     try {
       // compile html string
-      const htmlString = await cons[engine](viewsFilePath, {
+      const htmlString = await cons[engine](enginesFilePath, {
         data,
         self: true,
       });

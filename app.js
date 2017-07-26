@@ -1,7 +1,21 @@
-const argv = require('minimist')(process.argv.slice(2));
-const getData = require('./controls');
-
+const argv = require('yargs')
+  .option('url', {
+    alias: 'u',
+    describe: 'url to get data from'
+  })
+  .option('tariff', {
+    alias: 't',
+    describe: 'tariff to build'
+  })
+  .option('engine', {
+    alias: 'e',
+    describe: 'templating engine to use'
+  })
+  .demandOption(['url', 'tariff', 'engine'], 'URL, control type and engine to use are required to start')
+  .help()
+  .argv;
 
 console.log(argv);
 
-// getData('http://apidpc.mts.dev.qsupport.ru/api/1.0/products/Tariff?Regions.Alias=msk&MarketingProduct.Alias=smart_bezlimitishhe&fields=*');
+const compiler = require(`./controls/${argv.tariff}`);
+compiler(argv.tariff, argv.url, argv.engine);
