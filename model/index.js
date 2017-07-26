@@ -1,4 +1,5 @@
 const fs = require('fs');
+const mkdirp = require('mkdirp-promise');
 const path = require('path');
 const _ = require('lodash/lang');
 const config = require('config');
@@ -22,6 +23,7 @@ const render = async (tariffName, data, engine) => {
       tariffName,
       `index.${engineExtension}`,
     );
+    const outputPath = path.join(config.get('output'), tariffName);
     const outputFilePath = path.join(
       config.get('output'),
       tariffName,
@@ -35,7 +37,8 @@ const render = async (tariffName, data, engine) => {
         self: true,
       });
 
-      // write stream asynchroniusly
+      // write output stream asynchroniusly
+      await mkdirp(outputPath);
       const writeStream = fs.createWriteStream(outputFilePath);
       promisifyStream(writeStream);
 
