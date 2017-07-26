@@ -18,7 +18,7 @@ const render = async (tariffName, data, engine) => {
     }
 
     const engineExtension = config.get(`engines.${engine}.ext`);
-    const enginesFilePath = path.join(
+    const engineFilePath = path.join(
       config.get(`engines.${engine}.path`),
       tariffName,
       `index.${engineExtension}`,
@@ -32,7 +32,7 @@ const render = async (tariffName, data, engine) => {
 
     try {
       // compile html string
-      const htmlString = await cons[engine](enginesFilePath, {
+      const htmlString = await cons[engine](engineFilePath, {
         data,
         self: true,
       });
