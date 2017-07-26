@@ -16,6 +16,8 @@
     "memory-streams": "^0.1.2",
     "mkdirp-promise": "^5.0.1",
     "node-fetch": "^1.7.1",
+    "postcss": "^6.0.8",
+    "postcss-url": "^7.1.1",
     "pug": "^2.0.0-rc.2",
     "stream-to-promise": "^2.2.0",
     "winston": "^2.3.1",
@@ -25,8 +27,5 @@
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0"
-  },
-  "peerDependencies": {
-    "pug": "^2.0.0-rc.2"
   }
 }

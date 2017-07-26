@@ -2,12 +2,12 @@ const fs = require('fs');
 const mkdirp = require('mkdirp-promise');
 const path = require('path');
 const _ = require('lodash/lang');
+const promisifyStream = require('stream-to-promise');
 const config = require('config');
 const cons = require('consolidate');
-const promisifyStream = require('stream-to-promise');
 const logger = require('../logger');
 
-const render = async (tariffName, data, engine) => {
+const render = async (tariffName, data, engine, pdf) => {
   try {
     // check if arguments correct
     if (!_.isString(tariffName)) {
