@@ -1,21 +1,23 @@
 const path = require('path');
+const mkdirp = require('mkdirp');
 const winston = require('winston');
 const config = require('config');
 
-const logsPath = path.join(config.get('logs'), 'error-log.json');
+const logsPath = config.get('logs');
+mkdirp.sync(logsPath);
 
 const logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
-      level: 'error',
+      level: 'debug',
       colorize: true,
       timestamp: true,
       humanReadableUnhandledException: true,
       prettyPrint: true,
     }),
     new (winston.transports.File)({
-      level: 'error',
-      filename: logsPath,
+      level: 'warn',
+      filename: path.join(logsPath, 'error-log.json'),
       maxsize: 1e+6,
       json: true,
       prettyPrint: true,

@@ -15,7 +15,7 @@ const argv = require('yargs')
     describe: 'specify if add pdf compilation',
     type: 'boolean',
   })
-  .demandOption(['url', 'tariff', 'engine'], 'URL, control type and engine to use are required to start')
+  .demandOption(['url', 'tariff', 'engine'], 'URL, tariff type and engine to use are required to start')
   .help()
   .argv;
 
