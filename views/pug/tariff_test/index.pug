@@ -4,5 +4,24 @@ head(lang="en")
   style
     include styles/main.css
 body
-  h1 #{self.data.head.title}
-  p #{self.data.head.description}
+  h1 #{self.data.head.tariffName}
+  span #{self.data.head.tariffDescription}
+  //-
+    table
+      tbody.parameter-group
+        tr
+          th(colspan='3') 
+            h3 Обязательные платежи
+        tr
+          td(rowspan='2') Плата по тарифу
+          td Городской номер
+          td Федеральный номер
+        tr
+          td 100руб
+          td 200руб 
+  table
+    each val in self.data.body.params.baseParams
+      tbody.parameter-group
+        tr
+          th(colspan='3')
+            h3= val
