@@ -1,0 +1,14 @@
+table
+  each param, key in data.body.params
+    tbody.parameter-group
+      tr
+        th.base-parameter(colspan='3')
+          h3= key
+      each setting in param
+        tr
+          td(rowspan='2')= setting.Group.Title
+          td Городской номер
+          td Федеральный номер
+        tr
+          td= setting.NumValue + ' ' + setting.Unit.Display
+          td= setting.NumValue + ' ' + setting.Unit.Display

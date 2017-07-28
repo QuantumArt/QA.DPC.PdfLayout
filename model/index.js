@@ -16,6 +16,10 @@ const render = async (tariffName, data, engine, pdf) => {
     if (!_.isString(engine)) {
       throw new TypeError('engine must be a string');
     }
+    if (pdf && !_.isBoolean(pdf)) {
+      throw new TypeError('pdf flag must be a boolean');
+    }
+
 
     const engineExtension = config.get(`engines.${engine}.ext`);
     const engineFilePath = path.join(
@@ -24,34 +28,39 @@ const render = async (tariffName, data, engine, pdf) => {
       `index.${engineExtension}`,
     );
     const outputPath = path.join(config.get('output'), tariffName);
-    const outputFilePath = path.join(
+    const outputHtmlPath = path.join(
       config.get('output'),
       tariffName,
       'index.html',
     );
+    const outputJsonPath = path.join(
+      config.get('output'),
+      tariffName,
+      `${tariffName}.json`,
+    );
 
-    try {
-      // compile html string
-      const htmlString = await cons[engine](engineFilePath, {
-        data,
-        self: true,
-      });
+    // compile html string
+    const htmlString = await cons[engine](engineFilePath, {
+      data,
+      self: true,
+    });
+    const jsonString = JSON.stringify(data);
 
-      // write output stream asynchroniusly
-      await mkdirp(outputPath);
-      const writeStream = fs.createWriteStream(outputFilePath);
-      promisifyStream(writeStream);
+    // write output streams asynchroniusly
+    await mkdirp(outputPath);
+    const htmlWriteStream = fs.createWriteStream(outputHtmlPath, 'utf-8');
+    const jsonWriteStream = fs.createWriteStream(outputJsonPath, 'utf-8');
+    const htmlWritePromise = promisifyStream(htmlWriteStream.write(htmlString));
+    const jsonWritePromise = promisifyStream(jsonWriteStream.write(jsonString));
 
-      writeStream.on('finish', () => console.log('render complete'));
+    htmlWriteStream.on('finish', () => console.log('HTML render complete'));
+    jsonWriteStream.on('finish', () => console.log('JSON render complete'));
 
-      await writeStream.write(htmlString);
-      writeStream.end();
-    } catch (error) {
-      // ENOENT catched here as well
-      logger.error(error);
-    }
+    await Promise.all([htmlWritePromise, jsonWritePromise]);
+    htmlWriteStream.end();
+    jsonWriteStream.end();
   } catch (error) {
-    logger.error(error);
+    logger.error('Error from model/index.js', error);
   }
 };
 

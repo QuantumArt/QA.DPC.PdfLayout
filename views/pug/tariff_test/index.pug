@@ -1,27 +1,10 @@
+- var data = self.data;
+
 doctype html
 head(lang="en")
   title PUG
   style
     include styles/main.css
 body
-  h1 #{self.data.head.tariffName}
-  span #{self.data.head.tariffDescription}
-  //-
-    table
-      tbody.parameter-group
-        tr
-          th(colspan='3') 
-            h3 Обязательные платежи
-        tr
-          td(rowspan='2') Плата по тарифу
-          td Городской номер
-          td Федеральный номер
-        tr
-          td 100руб
-          td 200руб 
-  table
-    each val in self.data.body.params.baseParams
-      tbody.parameter-group
-        tr
-          th(colspan='3')
-            h3= val
+  include parts/header.pug
+  include parts/mainTable.pug

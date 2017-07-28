@@ -1,28 +1,36 @@
 const _ = require('lodash');
 
 const mapData = (data) => {
-  const tariff = data[0];
   const {
     MarketingProduct,
     Description,
     Parameters,
     ParamsDic,
-  } = tariff;
+  } = data[0];
 
-  const filteredParams = _.filter(Parameters, el => el.Group.Alias !== 'SystemGroup');
-  const baseParams = _
-    .chain(filteredParams)
+  // remove system parameters
+  const cleanParams = _.filter(Parameters, el => el.Group.Alias !== 'SystemGroup');
+
+  // extract list of base parameters
+  const baseParamsList = _
+    .chain(cleanParams)
     .map(el => el.BaseParameter)
     .compact()
-    .map(el => el.Title)
+    .map(el => el.Alias)
     .uniq()
     .value();
-  const mappedParams = _
-    .chain(filteredParams)
-    .filter(el => el.BaseParameter !== undefined)
-    .map((el, i) => {
-      console.log();
-    })
+
+  // sort clean parameters according by list of base parameters
+  const cleanToBase = _
+    .chain(baseParamsList)
+    .map((alias, i) => _
+      .chain(cleanParams)
+      .filter(cleanParam =>
+        cleanParam.BaseParameter !== undefined && cleanParam.BaseParameter.Alias === alias)
+      .compact()
+      .value(),
+    )
+    .keyBy(group => group[0].BaseParameter.Title)
     .value();
 
   const result = {
@@ -31,9 +39,7 @@ const mapData = (data) => {
       tariffDescription: Description,
     },
     body: {
-      params: {
-        baseParams,
-      },
+      params: cleanToBase,
     },
   };
 
@@ -49,12 +55,7 @@ module.exports = mapData;
       tariffDescription: string
     },
     body: {
-      params: [
-        {
-          paramName: string,
-
-        }
-      ]
+      params: []
     }
   }
 */

@@ -1,3 +1,4 @@
+const logger = require('./logger');
 const argv = require('yargs')
   .option('url', {
     alias: 'u',
@@ -21,5 +22,9 @@ const argv = require('yargs')
 
 // console.log(argv);
 
-const compiler = require(`./controls/${argv.tariff}`);
-compiler(argv.tariff, argv.url, argv.engine, argv.pdf);
+try {
+  const compiler = require(`./controls/${argv.tariff}`);
+  compiler(argv.tariff, argv.url, argv.engine, argv.pdf);
+} catch (error) {
+  logger.error('Error from App.js', error);
+}
