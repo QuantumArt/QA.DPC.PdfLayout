@@ -1,5 +1,4 @@
 const logger = require('../logger');
-// const loadData = require('../../utils/loadData');
 const render = require('../model');
 const jsonfilePromised = require('jsonfile-promised');
 const stringifyObject = require('stringify-object');

@@ -57,7 +57,6 @@ const checkExists = (key) => {
 
 const download = async options => new Promise((async (resolve, reject) => {
   try {
-    
     const markerKey = `${options.lockKey}.lock`;
     let existStatus = checkExists(markerKey);
     const destinationPath = path.join(options.destinationRootFolder, options.destinationName);

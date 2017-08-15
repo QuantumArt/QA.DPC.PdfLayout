@@ -1,4 +1,3 @@
-const logger = require('./logger');
 const downloader = require('./downloader');
 const path = require('path');
 const config = require('config');

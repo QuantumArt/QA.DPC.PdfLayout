@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "json": "http-server ./tests --p 8080",
-    "static": "http-server ./output --p 8081"
+    "static": "http-server ./output --p 8081",
+    "testdata": "http-server ./testdata --p 8082"
   },
   "author": "",
   "license": "ISC",
@@ -20,14 +21,11 @@
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^5.0.1",
     "node-fetch": "^1.7.1",
-    "node-stopwatch": "0.0.1",
-    "path-exists": "^3.0.0",
     "postcss": "^6.0.8",
     "postcss-url": "^7.1.1",
     "promisepipe": "^2.0.0",
     "proper-lockfile": "^2.0.1",
     "pug": "^2.0.0-rc.2",
-    "request": "^2.81.0",
     "stream-to-promise": "^2.2.0",
     "string-to-stream": "^1.1.0",
     "stringify-object": "^3.2.0",

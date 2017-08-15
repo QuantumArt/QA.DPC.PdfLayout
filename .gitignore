@@ -38,3 +38,4 @@ jspm_packages
 
 # Generated files
 output
+workdir/
