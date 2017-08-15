@@ -11,8 +11,18 @@ module.exports = {
       ext: 'js',
     },
   },
+  mappersPath: path.resolve('workdir/mappers'),
+  viewsPath: path.resolve('workdir/views'),
+  tariffJsonPath: path.resolve('workdir/tariffs'),
   output: path.resolve('output'),
   logs: path.resolve('logs'),
+  locks: {
+    root: path.resolve('workdir/lockfiles'),
+    completedroot: path.join(path.resolve('workdir/lockfiles'), 'completed'),
+    stale: 60000,
+    retries: 100,
+  },
+  zipdownloadpath: path.resolve('workdir/zip'),
 };
 
 /*
