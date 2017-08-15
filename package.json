@@ -5,13 +5,16 @@
   "scripts": {
     "json": "http-server ./tests --p 8080",
     "static": "http-server ./output --p 8081",
-    "testdata": "http-server ./testdata --p 8082"
+    "testdata": "http-server ./testdata --p 8082",
+    "api" : "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "config": "^1.26.1",
     "consolidate": "^0.14.5",
+    "express": "^4.15.4",
     "handlebars": "^4.0.10",
     "http-server": "^0.10.0",
     "jsonfile-promised": "0.0.1",

@@ -12,26 +12,27 @@ const stringToObj = require('stringify-object');
 //   templateData: {
 //     id: 1010,
 //     timestamp: 1502105939, // unix timestamp
-//     downloadUrl: 'http://blablabla/template', 
+//     downloadUrl: 'http://blablabla/template',
 //   },
 //   mapperData: {
 //     id: 1488,
 //     timestamp: 1502105982,
-//     downloadUrl: 'http://blablabla/mapper', 
+//     downloadUrl: 'http://blablabla/mapper',
 //   },
 //   templateEngine: 'pug',
 // };
 
 module.exports = async (options) => {
   // var options = {
-//     lockKey : 'template_pug_1488_1502106030', 
-//     downloadUrl: 'http://blabla/template_1488',
-//     isZip : true,
-//     isFolder: true,
-//     destinationRootFolder: '/views/pug/',
-//     destinationName : 'template_pug_1488_1502106030'
-// };
-  const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}`;
+  //     lockKey : 'template_pug_1488_1502106030',
+  //     downloadUrl: 'http://blabla/template_1488',
+  //     isZip : true,
+  //     isFolder: true,
+  //     destinationRootFolder: '/views/pug/',
+  //     destinationName : 'template_pug_1488_1502106030'
+  // };
+  const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData
+    .timestamp}`;
   const tariffDataOptions = {
     lockKey: tariffKey,
     fileUrl: options.tariffData.downloadUrl,
@@ -43,7 +44,8 @@ module.exports = async (options) => {
 
   console.log(`tariffOptions: ${stringToObj(tariffDataOptions)}`);
 
-  const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}`;
+  const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData
+    .timestamp}`;
   const mapperDataOptions = {
     lockKey: mapperKey,
     fileUrl: options.mapperData.downloadUrl,
@@ -59,29 +61,48 @@ module.exports = async (options) => {
 
   // await downloader(mapperDataOptions);
 
-  const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}`;
+  const templateKey = `template_${options.templateData.id}_${options
+    .templateData.timestamp}`;
   const templateDataOptions = {
     lockKey: templateKey,
     fileUrl: options.templateData.downloadUrl,
     isZip: true,
     isFolder: true,
-    destinationRootFolder: path.join(config.get('viewsPath'), options.templateEngine),
+    destinationRootFolder: path.join(
+      config.get('viewsPath'),
+      options.templateEngine,
+    ),
     destinationName: templateKey,
   };
 
   console.log(`templateOptions: ${stringToObj(templateDataOptions)}`);
   // await downloader(templateDataOptions);
 
-  await Promise.all([downloader(tariffDataOptions), downloader(mapperDataOptions), downloader(templateDataOptions)]);
+  await Promise.all([
+    downloader(tariffDataOptions),
+    downloader(mapperDataOptions),
+    downloader(templateDataOptions),
+  ]);
 
-  const result = await compiler({
-    tariffJsonPath: path.join(tariffDataOptions.destinationRootFolder, tariffDataOptions.destinationName),
+  const outputName = `${options.tariffData.id}_${options.tariffData
+    .timestamp}/${options.mapperData.id}_${options.mapperData
+    .timestamp}/${options.templateData.id}_${options.templateData.timestamp}`;
+
+  await compiler({
+    tariffJsonPath: path.join(
+      tariffDataOptions.destinationRootFolder,
+      tariffDataOptions.destinationName,
+    ),
     mapperPath: mapperDataOptions.destinationRootFolder,
-    templatePath: path.join(templateDataOptions.destinationRootFolder, templateDataOptions.destinationName),
-    outputDirName: `${options.tariffData.id}_${options.tariffData.timestamp}/${options.mapperData.id}_${options.mapperData.timestamp}/${options.templateData.id}_${options.templateData.timestamp}`,
+    templatePath: path.join(
+      templateDataOptions.destinationRootFolder,
+      templateDataOptions.destinationName,
+    ),
+    outputDirName: outputName,
     engine: options.templateEngine,
   });
-  return result;
+
+  return outputName;
 };
 
 // module.exports = function (callback, tariff, url, engine, pdf) {

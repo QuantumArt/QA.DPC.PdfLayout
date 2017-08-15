@@ -13,12 +13,6 @@ const lockfilesDir = path.resolve(config.get('locks.root'));
 const completedMarkersDir = path.join(config.get('locks.completedroot'));
 const zipdownloadPath = path.resolve(config.get('zipdownloadpath'));
 
-(async () => {
-  await mkdirp(lockfilesDir);
-  await mkdirp(completedMarkersDir);
-  await mkdirp(zipdownloadPath);
-})();
-
 const fetchAndSave = async (url, destinationPath) => {
   const fetchRes = await fetch(url);
   console.log(`downloaded ${url}`);
@@ -60,6 +54,9 @@ const download = async options => new Promise((async (resolve, reject) => {
     const markerKey = `${options.lockKey}.lock`;
     let existStatus = checkExists(markerKey);
     const destinationPath = path.join(options.destinationRootFolder, options.destinationName);
+    await mkdirp(lockfilesDir);
+    await mkdirp(completedMarkersDir);
+    await mkdirp(zipdownloadPath);
     if (options.isFolder) {
       await mkdirp(destinationPath);
     } else {
@@ -96,7 +93,7 @@ const download = async options => new Promise((async (resolve, reject) => {
       if (options.isZip) {
         await unzip(saveFilePath, destinationPath);
       }
-      if (options.izZip) {
+      if (options.isZip) {
         fs.unlinkSync(saveFilePath);
       }
 
