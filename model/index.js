@@ -1,13 +1,17 @@
 const fs = require('fs');
+const util = require('util');
 const mkdirp = require('mkdirp-promise');
 const path = require('path');
 const _ = require('lodash/lang');
 const config = require('config');
 const cons = require('consolidate');
-const logger = require('../logger');
+const str = require('string-to-stream');
 const stringifyObject = require('stringify-object');
 const promisePipe = require('promisepipe');
-const str = require('string-to-stream');
+const juice = require('juice');
+const logger = require('../logger');
+
+const readFile = util.promisify(fs.readFile);
 
 // const options = {
 //   engine: 'pug',
@@ -54,6 +58,8 @@ const render = async (options, data) => {
       data,
       self: true,
     });
+    const cssString = await readFile(`${options.templatePath}/styles/main.css`, 'utf-8');
+    const styledHtmlString = juice.inlineContent(htmlString, cssString);
     const jsonString = JSON.stringify(data);
 
     // write output streams asynchroniusly
@@ -62,7 +68,7 @@ const render = async (options, data) => {
     const jsonWriteStream = fs.createWriteStream(outputJsonPath, 'utf-8');
     // const htmlWritePromise = promisifyStream(htmlWriteStream.write(htmlString));
     // const jsonWritePromise = promisifyStream(jsonWriteStream.write(jsonString));
-    const htmlWritePromise = promisePipe(str(htmlString), htmlWriteStream);
+    const htmlWritePromise = promisePipe(str(styledHtmlString), htmlWriteStream);
     const jsonWritePromise = promisePipe(str(jsonString), jsonWriteStream);
 
     htmlWriteStream.on('finish', () => console.log('HTML render complete'));
