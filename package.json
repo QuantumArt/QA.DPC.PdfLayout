@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "json": "http-server ./tests --p 8080",
     "static": "http-server ./output --p 8081",
-    "testdata": "http-server ./testdata --p 8082",
-    "api" : "node server.js"
+    "testdata": "http-server ./tests/testdata --p 8082",
+    "generate:pug": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/pug/test_tariff -e pug",
+    "api": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +29,6 @@
     "promisepipe": "^2.0.0",
     "proper-lockfile": "^2.0.1",
     "pug": "^2.0.0-rc.2",
-    "stream-to-promise": "^2.2.0",
     "string-to-stream": "^1.1.0",
     "stringify-object": "^3.2.0",
     "unzipper": "^0.8.9",

@@ -1,3 +1,4 @@
+const path = require('path');
 const logger = require('../logger');
 const render = require('../model');
 const jsonfilePromised = require('jsonfile-promised');
@@ -13,7 +14,8 @@ const stringifyObject = require('stringify-object');
 
 const compile = async (options) => {
   try {
-    const mapData = require(options.mapperPath); // eslint-disable-line global-require
+    /* eslint-disable global-require */
+    const mapData = require(path.normalize(options.mapperPath));
     const rawData = await jsonfilePromised.readFile(options.tariffJsonPath);
     const data = mapData(rawData);
     await render({

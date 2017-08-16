@@ -2,7 +2,6 @@ const fs = require('fs');
 const mkdirp = require('mkdirp-promise');
 const path = require('path');
 const _ = require('lodash/lang');
-const promisifyStream = require('stream-to-promise');
 const config = require('config');
 const cons = require('consolidate');
 const logger = require('../logger');
@@ -37,9 +36,9 @@ const render = async (options, data) => {
       `index.${engineExtension}`,
     );
 
-    
     const outputPath = path.join(config.get('output'), options.outputDirName);
-    
+    console.log(outputPath);
+
     const outputHtmlPath = path.join(
       outputPath,
       'index.html',
@@ -50,7 +49,7 @@ const render = async (options, data) => {
       'mappedData.json',
     );
 
-    // compile html string
+    // compile strings
     const htmlString = await cons[options.engine](engineFilePath, {
       data,
       self: true,
@@ -75,7 +74,7 @@ const render = async (options, data) => {
     // jsonWriteStream.end();
     return;
   } catch (error) {
-    logger.error('Error from model/index.js', error);
+    logger.error('Error from model', error);
   }
 };
 

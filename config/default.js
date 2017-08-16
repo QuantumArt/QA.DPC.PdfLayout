@@ -8,7 +8,7 @@ module.exports = {
     },
     handlebars: {
       path: path.resolve('views', 'handlebars'),
-      ext: 'js',
+      ext: 'hbs',
     },
   },
   mappersPath: path.resolve('workdir/mappers'),

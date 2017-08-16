@@ -34,7 +34,7 @@ const mapData = (data) => {
     .value();
 
   const result = {
-    head: {
+    header: {
       tariffName: MarketingProduct.Title,
       tariffDescription: Description,
     },

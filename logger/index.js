@@ -17,11 +17,9 @@ const logger = new (winston.Logger)({
     }),
     new (winston.transports.File)({
       level: 'warn',
-      filename: path.join(logsPath, 'error-log.json'),
+      filename: path.join(logsPath, 'errors.log'),
       maxsize: 1e+6,
-      json: true,
-      prettyPrint: true,
-      stringify: true,
+      json: false,
     }),
   ],
 });

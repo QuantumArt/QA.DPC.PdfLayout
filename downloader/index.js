@@ -5,9 +5,8 @@ const fs = require('fs');
 const promisePipe = require('promisepipe');
 const path = require('path');
 const config = require('config');
-const logger = require('../logger');
 const mkdirp = require('mkdirp-promise');
-
+const logger = require('../logger');
 
 const lockfilesDir = path.resolve(config.get('locks.root'));
 const completedMarkersDir = path.join(config.get('locks.completedroot'));

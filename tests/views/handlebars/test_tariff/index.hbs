@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <h1>{{data.header.tariffName}}</h1>
+    <h4>{{data.header.tariffDescription}}</h4>
+  </header>
+  <table>
+    {{#each data.body.params}}
+      <tbody class="parameter-group">
+        <tr>
+          <th class="base-parameter" colspan="3">
+            <h3>{{@key}}</h3>
+          </th>
+        </tr>
+      </tbody>
+    {{/each}}
+  </table>
+</body>
+</html>
