@@ -3,12 +3,13 @@ const path = require('path');
 module.exports = {
   engines: {
     pug: {
-      path: path.resolve('views', 'pug'),
       ext: 'pug',
     },
     handlebars: {
-      path: path.resolve('views', 'handlebars'),
       ext: 'hbs',
+    },
+    dot: {
+      ext: 'dot',
     },
   },
   mappersPath: path.resolve('workdir/mappers'),

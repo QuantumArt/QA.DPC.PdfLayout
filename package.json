@@ -6,7 +6,8 @@
     "static": "http-server ./output --p 8081",
     "testdata": "http-server ./tests/testdata --p 8082",
     "generate:pug": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/pug/test_tariff -e pug",
-    "generate:hb": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/handlebars/test_tariff -e handlebars",
+    "generate:hbs": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/handlebars/test_tariff -e handlebars",
+    "generate:dot": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/dot/test_tariff -e dot",
     "api": "node server.js"
   },
   "author": "",
@@ -15,6 +16,7 @@
     "body-parser": "^1.17.2",
     "config": "^1.26.1",
     "consolidate": "^0.14.5",
+    "dot": "^1.1.2",
     "express": "^4.15.4",
     "handlebars": "^4.0.10",
     "http-server": "^0.10.0",

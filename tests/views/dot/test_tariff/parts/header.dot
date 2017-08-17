@@ -1,0 +1,8 @@
+{{##def.header:
+  <header>
+    <h1>{{=it.data.header.tariffName}}</h1>
+    <h4>{{=it.data.header.tariffDescription}}</h4>
+  </header>
+#}}
+
+{{#def.header}}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Handlebars</title>
+  <title>Dot</title>
   <style type="text/css">
     @font-face {
       font-family: 'Corpid';
@@ -16,7 +16,9 @@
   </style>
 </head>
 <body>
-  {{> header}}
-  {{> mainTable}}
+  <header>
+    <h1>{{=it.data.header.tariffName}}</h1>
+    <h4>{{=it.data.header.tariffDescription}}</h4>
+  </header>
 </body>
 </html>

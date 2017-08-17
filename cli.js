@@ -47,8 +47,7 @@ try {
       mapperPath: path.resolve(basePath, mapperPath),
       templatePath: path.resolve(basePath, templatePath),
       engine,
-      // outputDirName: `render-${Date.now()}`,
-      outputDirName: 'test-render',
+      outputDirName: `test-render-${engine}`,
     });
   })();
 } catch (error) {
