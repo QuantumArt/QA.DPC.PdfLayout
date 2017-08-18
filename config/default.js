@@ -11,6 +11,9 @@ module.exports = {
     dot: {
       ext: 'dot',
     },
+    ejs: {
+      ext: 'ejs',
+    },
   },
   mappersPath: path.resolve('workdir/mappers'),
   viewsPath: path.resolve('workdir/views'),

@@ -1,0 +1,48 @@
+ @font-face {
+  font-family: 'Corpid';
+  font-weight: 700;
+  font-style: normal;
+  src: url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.woff2') format('woff2'),
+       url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.woff') format('woff'),
+       url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.ttf') format('truetype');
+} 
+
+/* @font-face {
+  font-family: 'Officina Serif';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/officina-serif-bold.woff2') format('woff2'),
+       url('/fonts/officina-serif-bold.woff') format('woff'),
+       url('/fonts/officina-serif-bold.ttf') format('truetype');
+} */
+
+body {
+  font-family: 'Corpid';
+  font-weight: 700;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+}
+
+h4 {
+  text-align: center;
+}
+
+table {
+  width: 960px;
+  margin: 0 auto;
+}
+
+td {
+  vertical-align: top;
+}
+
+td:first-child {
+  width: 33%;
+}
+
+.base-parameter {
+  background-color:#cccccc;
+}
