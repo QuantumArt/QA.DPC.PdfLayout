@@ -15,6 +15,9 @@ app.post('/generate', jsonParser, async (req, res) => {
   return res.send(outputPath);
 });
 
+app.use('/output', express.static('output'));
+app.use('/testdata', express.static('tests/testdata'));
+
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });
