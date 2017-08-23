@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const main = require('./main');
+const config = require('config');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.post('/generate', jsonParser, async (req, res) => {
 app.use('/output', express.static('output'));
 app.use('/testdata', express.static('tests/testdata'));
 
-app.listen(3000, () => {
-  console.log('listening on port 3000');
+const apiPort = config.get('apiPort');
+app.listen(apiPort, () => {
+  console.log(`listening on port ${apiPort}`);
 });

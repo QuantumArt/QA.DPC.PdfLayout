@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  apiPort: 3000,
   engines: {
     pug: {
       ext: 'pug',
