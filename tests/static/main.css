@@ -52,12 +52,11 @@ h4 {
 .tariff-logo {
   position: absolute;
   right: 30px;
-  top: 8%;
+  top: 70px;
 }
 
 .tariff-name {
   margin-bottom: 5px;
-  margin-left: 43px;
   font-size: 40px;
   font-weight: 400;
 }
@@ -67,31 +66,49 @@ h4 {
   position: absolute;
   right: 0;
   top: 0;
-}
-
-.number-type, .benefits {
-  display: inline-block;
+  text-align: center;
 }
 
 .number-type__header {
   color: #e30611;
   font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.number-type__col {
+  display: inline-block;
+  max-width: 50%;
 }
 
 .number-type__row {
   padding: 3px 0;
+  font-size: 14px;
+}
+
+.number-type__row--focus {
+  font-weight: 700;
+  font-size: 15px;
+  color: #e30611;
+  padding: 25px 0;
+  margin-top: 10px;
+}
+
+.number-type__row--border {
+  border-top: 1px solid #dfe0e0;
+  border-bottom: 1px solid #dfe0e0;
 }
 
 .benefits {
-  margin-left: 150px;
   font-weight: 700;
   color: #e30611;
+  text-align: center;
+  margin-left: 150px;
 }
 
 .main-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 td {
