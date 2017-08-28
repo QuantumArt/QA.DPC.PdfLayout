@@ -1,30 +1,20 @@
 const lockFile = require('lockfile');
-const fetch = require('node-fetch');
-const unzipper = require('unzipper');
 const fs = require('fs');
-const promisePipe = require('promisepipe');
 const path = require('path');
 const config = require('config');
 const mkdirp = require('mkdirp-promise');
 const logger = require('../logger');
+const checkCompleted = require('./checkCompleted');
+const download = require('./download');
+const unzip = require('./unzip');
+const util = require('util');
+
+const promisifiedLock = util.promisify(lockFile.lock);
 
 const lockfilesDir = path.resolve(config.get('locks.root'));
 const completedMarkersDir = path.join(config.get('locks.completedroot'));
 const zipdownloadPath = path.resolve(config.get('zipdownloadpath'));
 
-const fetchAndSave = async (url, destinationPath) => {
-  const fetchRes = await fetch(url);
-  if (fetchRes.status !== 200) {
-    throw new Error(`erorr while downloading ${url}: ${fetchRes.status}`);
-  }
-  console.log(`downloaded ${url}`);
-  return promisePipe(fetchRes.body, fs.createWriteStream(destinationPath));
-};
-
-const unzip = async (zipFilePath, destPath) =>
-  promisePipe(fs.createReadStream(zipFilePath), unzipper.Extract({
-    path: destPath,
-  }));
 
 const createMarkerFile = (markerPath) => {
   console.log(`creating marker ${markerPath}`);
@@ -32,14 +22,6 @@ const createMarkerFile = (markerPath) => {
   console.log(`created marker ${markerPath}`);
 };
 
-const checkExists = (key) => {
-  const completedMarkerPath = path.join(completedMarkersDir, key);
-  // const inprogressMarkerPath = path.join(lockfilesDir, key);
-  return {
-    // inprogress: fs.existsSync(inprogressMarkerPath),
-    completed: fs.existsSync(completedMarkerPath),
-  };
-};
 
 // var options = {
 //     lockKey : 'template_pug_1488_1502106030', 
@@ -51,10 +33,14 @@ const checkExists = (key) => {
 // };
 
 
-const download = async options => new Promise((async (resolve, reject) => {
+const workflow = async (options) => {
+  let locked = false;
+  // let downloaded = false;
+  const markerKey = options.lockKey;
+  const inprogressMarkerPath = path.join(lockfilesDir, markerKey);
+
   try {
-    const markerKey = `${options.lockKey}.lock`;
-    let existStatus = checkExists(markerKey);
+    let existStatus = await checkCompleted(markerKey);
     const destinationPath = path.join(options.destinationRootFolder, options.destinationName);
     await mkdirp(lockfilesDir);
     await mkdirp(completedMarkersDir);
@@ -64,50 +50,49 @@ const download = async options => new Promise((async (resolve, reject) => {
     } else {
       await mkdirp(options.destinationRootFolder);
     }
-    console.log(`first check: completed: ${existStatus.completed}`);
-    if (existStatus.completed) {
-      resolve(true);
+    console.log(`first check: completed: ${existStatus}`);
+    if (existStatus) {
       return;
     }
-    const inprogressMarkerPath = path.join(lockfilesDir, markerKey);
-    // createMarkerFile(inprogressMarkerPath);
     const lockfileOptions = {
       stale: config.get('locks.stale'),
       retries: config.get('locks.retries'),
     };
-    lockFile.lock(inprogressMarkerPath, lockfileOptions, async (err) => {
-      if (err) {
-        console.log(`lock ${inprogressMarkerPath} failed`);
-        reject(err);
-      }
 
-      console.log(`acquired lock on ${inprogressMarkerPath}`);
-      existStatus = checkExists(markerKey);
-      console.log(`second check: completed: ${existStatus.completed}`);
-      if (existStatus.completed) {
-        console.log('completed, releasing');
-        lockFile.unlock(inprogressMarkerPath);
-        resolve(true);
-        return;
-      }
-      const saveFilePath = options.isZip ? path.join(zipdownloadPath, `${options.lockKey}.zip`) : destinationPath;
-      await fetchAndSave(options.fileUrl, saveFilePath);
-      if (options.isZip) {
-        await unzip(saveFilePath, destinationPath);
-      }
-      if (options.isZip) {
-        fs.unlinkSync(saveFilePath);
-      }
 
-      const completedMarkerPath = path.join(completedMarkersDir, markerKey);
-      createMarkerFile(completedMarkerPath);
+    await promisifiedLock(inprogressMarkerPath, lockfileOptions);
+    locked = true;
+
+    console.log(`acquired lock on ${inprogressMarkerPath}`);
+    existStatus = await checkCompleted(markerKey);
+    console.log(`second check: completed: ${existStatus}`);
+    if (existStatus) {
+      console.log('completed, releasing');
       lockFile.unlock(inprogressMarkerPath);
-      resolve(true);
-    });
-  } catch (e) {
-    logger.error('error while downloading', e);
-    reject(e);
-  }
-}));
+      return;
+    }
+    const saveFilePath = options.isZip ? path.join(zipdownloadPath, `${options.lockKey}.zip`) : destinationPath;
+    await download(options.fileUrl, saveFilePath);
+    if (options.isZip) {
+      await unzip(saveFilePath, destinationPath).catch((e) => {
+        logger.error(`Error while unzipping ${saveFilePath}`, e);
+        throw new Error(`Error while unzipping ${saveFilePath}`);
+      });
+    }
+    if (options.isZip) {
+      fs.unlinkSync(saveFilePath);
+    }
 
-module.exports = download;
+    const completedMarkerPath = path.join(completedMarkersDir, markerKey);
+    createMarkerFile(completedMarkerPath);
+    lockFile.unlock(inprogressMarkerPath);
+  } catch (e) {
+    throw e;
+  } finally {
+    if (locked) {
+      lockFile.unlock(inprogressMarkerPath);
+    }
+  }
+};
+
+module.exports = workflow;
