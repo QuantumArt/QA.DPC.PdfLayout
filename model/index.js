@@ -60,13 +60,14 @@ const render = async (options, data) => {
       const name = partialInfo.name;
       partials[name] = `parts/${name}`;
     });
+    const cssString = await readFile(`${options.templatePath}/styles/main.css`, 'utf-8');
     const htmlString = await cons[options.engine](engineFilePath, {
       data,
-      self: true,
-      partials,
+      style: cssString,
+      self: true, // pug specific
+      partials, // for all engines that can't include partials at runtime
     });
-    const cssString = await readFile(`${options.templatePath}/styles/main.css`, 'utf-8');
-    const styledHtmlString = juice.inlineContent(htmlString, cssString);
+
     const jsonString = JSON.stringify(data);
 
     // write output streams asynchroniusly
@@ -74,7 +75,7 @@ const render = async (options, data) => {
     const htmlWriteStream = fs.createWriteStream(outputHtmlPath, 'utf-8');
     const jsonWriteStream = fs.createWriteStream(outputJsonPath, 'utf-8');
 
-    const htmlWritePromise = promisePipe(str(styledHtmlString), htmlWriteStream);
+    const htmlWritePromise = promisePipe(str(htmlString), htmlWriteStream);
     const jsonWritePromise = promisePipe(str(jsonString), jsonWriteStream);
 
     htmlWriteStream.on('finish', () => console.log('HTML render complete'));
