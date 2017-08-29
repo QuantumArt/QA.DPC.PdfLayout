@@ -23,7 +23,6 @@
     "handlebars": "^4.0.10",
     "http-server": "^0.10.0",
     "jsonfile-promised": "0.0.1",
-    "juice": "^4.1.0",
     "lockfile": "^1.0.3",
     "lodash": "^4.17.4",
     "memory-streams": "^0.1.2",
