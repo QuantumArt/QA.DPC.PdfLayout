@@ -31,14 +31,13 @@ const mapData = (data) => {
     .uniq()
     .value();
 
-  // sort clean parameters according by list of groups
+  // sort clean parameters according to list of groups
   const cleanByGroup = _
     .chain(paramsGroupsList)
     .map((title, i) => _
       .chain(mergedParams)
       .filter(cleanParam => cleanParam.BaseParameter !== undefined && cleanParam.Group.Title === title)
       .compact()
-
       .value(),
     )
     .map(arr => _.reduce(arr, (result, param) => {
