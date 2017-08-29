@@ -19,19 +19,30 @@
         {{/each}}
       {{else}}
         {{#each parent as |param paramIndex|}}
-          <tr class="parameter-parent">
-            <td colspan="2">
-              <h4>{{parentName}}</h4>
-            </td>
-          </tr>
-          <tr class="parameter">
-            <td class="parameter-description">
-              {{param.Title}}
-            </td>
-            <td class="parameter-value">
-              {{param.NumValue}} {{param.Unit.Display}}
-            </td>
-          </tr>
+          {{#ifEq parentName param.Title}}
+            <tr class="parameter">
+              <td class="parameter-description">
+                {{param.Title}}
+              </td>
+              <td class="parameter-value">
+                {{param.NumValue}} {{param.Unit.Display}}
+              </td>
+            </tr>
+          {{else}}
+            <tr class="parameter-parent">
+              <td colspan="2">
+                <h4>{{parentName}}</h4>
+              </td>
+            </tr>
+            <tr class="parameter">
+              <td class="parameter-description">
+                {{param.Title}}
+              </td>
+              <td class="parameter-value">
+                {{param.NumValue}} {{param.Unit.Display}}
+              </td>
+            </tr>
+          {{/ifEq}}
         {{/each}}
       {{/ifEq}}
     {{/each}}

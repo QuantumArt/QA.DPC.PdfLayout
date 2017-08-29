@@ -8,14 +8,24 @@ const mapData = (data) => {
     Description,
     Parameters,
     ParamsDic,
-  } = data[0];
+  } = data;
 
   // remove system parameters
   const cleanParams = _.filter(Parameters, el => el.Group.Alias !== 'SystemGroup');
+  const cleanParamsDic = _.filter(ParamsDic, (el) => {
+    if (_.isArray(el)) return _.each(el, subEl => subEl.Group && subEl.Group.Alias !== 'SystemGroup');
+
+    return el.Group.Alias !== 'SystemGroup';
+  });
+  const mergedParams = _
+    .chain(_.concat(cleanParams, cleanParamsDic))
+    .flatten()
+    .uniqBy('Id')
+    .value();
 
   // extract list of groups
   const paramsGroupsList = _
-    .chain(cleanParams)
+    .chain(mergedParams)
     .map(el => el.Group.Title)
     .compact()
     .uniq()
@@ -25,17 +35,17 @@ const mapData = (data) => {
   const cleanByGroup = _
     .chain(paramsGroupsList)
     .map((title, i) => _
-      .chain(cleanParams)
-      .filter(cleanParam =>
-        cleanParam.BaseParameter !== undefined && cleanParam.Group.Title === title)
+      .chain(mergedParams)
+      .filter(cleanParam => cleanParam.BaseParameter !== undefined && cleanParam.Group.Title === title)
       .compact()
+
       .value(),
     )
     .map(arr => _.reduce(arr, (result, param) => {
       if (param.Parent) {
         (result[param.Parent.Title] || (result[param.Parent.Title] = []).push(param));
       } else {
-        (result.parentless = []).push(param);
+        (result.parentless || (result.parentless = [])).push(param);
       }
 
       return result;
@@ -43,10 +53,7 @@ const mapData = (data) => {
     .value();
 
   // key grouped parameters by list of groups
-  const keyedParams = _.keyBy(cleanByGroup, (group) => {
-    const i = cleanByGroup.indexOf(group);
-    return paramsGroupsList[i];
-  });
+  const sortedParams = _.keyBy(cleanByGroup, group => paramsGroupsList[cleanByGroup.indexOf(group)]);
 
   const result = {
     header: {
@@ -55,7 +62,8 @@ const mapData = (data) => {
       benefits: MarketingProduct.Advantages,
     },
     body: {
-      params: keyedParams,
+      params: sortedParams,
+      mergedParams,
     },
   };
 
