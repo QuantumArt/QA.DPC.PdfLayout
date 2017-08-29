@@ -1,0 +1,39 @@
+{{#each data.body.params as |group groupName|}}
+  <tbody class="parameter-block">
+    <tr class="parameter-group">
+      <th colspan="2">
+        <h3>{{inc @index}}. {{groupName}}</h3>
+      </th>
+    </tr>
+    {{#each group as |parent parentName|}}
+      {{#ifEq parentName 'parentless'}}
+        {{#each parent as |param paramIndex|}}
+          <tr class="parameter">
+            <td class="parameter-description">
+              {{param.Title}}
+            </td>
+            <td class="parameter-value">
+              {{param.NumValue}} {{param.Unit.Display}}
+            </td>
+          </tr>
+        {{/each}}
+      {{else}}
+        {{#each parent as |param paramIndex|}}
+          <tr class="parameter-parent">
+            <td colspan="2">
+              <h4>{{parentName}}</h4>
+            </td>
+          </tr>
+          <tr class="parameter">
+            <td class="parameter-description">
+              {{param.Title}}
+            </td>
+            <td class="parameter-value">
+              {{param.NumValue}} {{param.Unit.Display}}
+            </td>
+          </tr>
+        {{/each}}
+      {{/ifEq}}
+    {{/each}}
+  </tbody>
+{{/each}}

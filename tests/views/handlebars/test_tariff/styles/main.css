@@ -131,23 +131,23 @@ td:first-child {
   display: block;
 }
 
-.base-parameter {
+.parameter-group {
   background-color:#e30611;
   color: white;
 }
 
-.base-parameter-note {
+.parameter-group-note {
   background-color:#e30611;
   color: white;
   border-top: 1px solid #A8A4A4;
   text-align: center;
 }
 
-.base-parameter-note td {
+.parameter-group-note td {
   padding: 3px 15px;
 }
 
-.parameter-name {
+.parameter-parent {
   background-color: #9a9d9d;
   color: white;
 }

@@ -4,11 +4,11 @@ const util = require('util');
 const mkdirp = require('mkdirp-promise');
 const _ = require('lodash/lang');
 const config = require('config');
-const cons = require('consolidate');
 const str = require('string-to-stream');
 const stringifyObject = require('stringify-object');
 const promisePipe = require('promisepipe');
-const juice = require('juice');
+const cons = require('consolidate');
+const handlebars = require('handlebars');
 const logger = require('../logger');
 
 const readFile = util.promisify(fs.readFile);
@@ -52,7 +52,7 @@ const render = async (options, data) => {
       'mappedData.json',
     );
 
-    // compile strings
+    // register partials
     const partials = {};
     const partialsList = await readDir(`${options.templatePath}/parts`);
     partialsList.forEach((partial) => {
@@ -60,6 +60,17 @@ const render = async (options, data) => {
       const name = partialInfo.name;
       partials[name] = `parts/${name}`;
     });
+
+    // register custom engine helpers/filters
+    if (options.engine === 'handlebars') {
+      cons.requires.handlebars = handlebars;
+      cons.requires.handlebars.registerHelper('ifEq', function checkIfEqual(arg1, arg2, opts) {
+        return (arg1 === arg2) ? opts.fn(this) : opts.inverse(this);
+      });
+      cons.requires.handlebars.registerHelper('inc', value => parseInt(value, 10) + 1);
+    }
+
+    // prepare strings
     const cssString = await readFile(`${options.templatePath}/styles/main.css`, 'utf-8');
     const htmlString = await cons[options.engine](engineFilePath, {
       data,
