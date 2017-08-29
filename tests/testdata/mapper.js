@@ -32,7 +32,7 @@ const mapData = (data) => {
     .value();
 
   // sort clean parameters according to list of groups
-  const cleanByGroup = _
+  const mergedByGroup = _
     .chain(paramsGroupsList)
     .map((title, i) => _
       .chain(mergedParams)
@@ -52,7 +52,7 @@ const mapData = (data) => {
     .value();
 
   // key grouped parameters by list of groups
-  const sortedParams = _.keyBy(cleanByGroup, group => paramsGroupsList[cleanByGroup.indexOf(group)]);
+  const sortedParams = _.keyBy(mergedByGroup, group => paramsGroupsList[mergedByGroup.indexOf(group)]);
 
   const result = {
     header: {
