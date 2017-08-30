@@ -97,6 +97,7 @@ const render = async (options, data) => {
     return;
   } catch (error) {
     logger.error('Error from model', error);
+    throw error;
   }
 };
 
