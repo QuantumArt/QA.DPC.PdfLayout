@@ -1,5 +1,8 @@
 const path = require('path');
 
+const workdirBase = path.resolve('c:/temp/QA.DPC.Node.PdfGenerator.workdir');
+const lockfilesRoot = path.join(workdirBase, 'lockfiles');
+
 module.exports = {
   apiPort: 3000,
   engines: {
@@ -16,18 +19,18 @@ module.exports = {
       ext: 'ejs',
     },
   },
-  mappersPath: path.resolve('workdir/mappers'),
-  viewsPath: path.resolve('workdir/views'),
-  tariffJsonPath: path.resolve('workdir/tariffs'),
-  output: path.resolve('output'),
-  logs: path.resolve('logs'),
+  mappersPath: path.join(workdirBase, 'mappers'),
+  viewsPath: path.join(workdirBase, 'views'),
+  tariffJsonPath: path.join(workdirBase, 'tariffs'),
+  output: path.join(workdirBase, 'output'),
+  logs: path.resolve('c:/logs/QA.DPC.Node.PdfGenerator'),
   locks: {
-    root: path.resolve('workdir/lockfiles'),
-    completedroot: path.join(path.resolve('workdir/lockfiles'), 'completed'),
+    root: lockfilesRoot,
+    completedroot: path.join(lockfilesRoot, 'completed'),
     stale: 60000,
     retries: 100,
   },
-  zipdownloadpath: path.resolve('workdir/zip'),
+  zipdownloadpath: path.join(workdirBase, 'zip'),
 };
 
 /*

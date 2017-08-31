@@ -35,7 +35,6 @@ const createMarkerFile = (markerPath) => {
 
 const workflow = async (options) => {
   let locked = false;
-  // let downloaded = false;
   const markerKey = options.lockKey;
   const inprogressMarkerPath = path.join(lockfilesDir, markerKey);
 
