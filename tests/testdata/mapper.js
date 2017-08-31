@@ -1,8 +1,11 @@
-const _ = require('lodash');
+/* 
+  Lodash is passed in sandbox context, this is the only module, awalaible here.
+*/
+const _ = this.lodash;
 
 /* eslint-disable no-param-reassign */
 
-const mapData = (data) => {
+module.exports = (data) => {
   const {
     MarketingProduct,
     Description,
@@ -68,8 +71,6 @@ const mapData = (data) => {
 
   return result;
 };
-
-module.exports = mapData;
 
 /*
   {

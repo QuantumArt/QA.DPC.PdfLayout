@@ -1,8 +1,18 @@
 const path = require('path');
-const logger = require('../logger');
-const render = require('../model');
+const fs = require('fs');
+const util = require('util');
 const jsonfilePromised = require('jsonfile-promised');
 const stringifyObject = require('stringify-object');
+const { NodeVM } = require('vm2');
+const lodash = require('lodash');
+const render = require('../model');
+const logger = require('../logger');
+
+const readFile = util.promisify(fs.readFile);
+const vm = new NodeVM({
+  console: 'inherit',
+  sandbox: { lodash },
+});
 
 // const options = {
 //   tariffJsonPath: '../tariffs/tariff_1234_4567.json',
@@ -15,9 +25,16 @@ const stringifyObject = require('stringify-object');
 const compile = async (options) => {
   try {
     /* eslint-disable global-require */
-    const mapData = require(path.normalize(options.mapperPath));
     const rawData = await jsonfilePromised.readFile(options.tariffJsonPath);
-    const data = mapData(rawData);
+    const mapData = await readFile(path.normalize(options.mapperPath), 'utf-8');
+    let data;
+    try {
+      const secureMap = vm.run(mapData);
+      data = secureMap(rawData);
+    } catch (error) {
+      logger.error('Error with mapper', error);
+      throw error;
+    }
     await render({
       engine: options.engine,
       templatePath: options.templatePath,
@@ -26,6 +43,7 @@ const compile = async (options) => {
     }, data);
   } catch (error) {
     logger.error(`Error from compiler with options: ${stringifyObject(options)}: ${error.message}`, error);
+    throw error;
   }
 };
 
