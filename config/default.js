@@ -1,6 +1,6 @@
 const path = require('path');
 
-const workdirBase = path.resolve('c:/temp/QA.DPC.Node.PdfGenerator.workdir');
+const workdirBase = path.resolve('workdir');
 const lockfilesRoot = path.join(workdirBase, 'lockfiles');
 
 module.exports = {
