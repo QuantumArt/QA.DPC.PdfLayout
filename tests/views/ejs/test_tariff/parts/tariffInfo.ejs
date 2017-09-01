@@ -1,0 +1,21 @@
+<div class="tariff-info">
+  <div class="number-type">
+    <h4 class="number-type__header">Федеральный номер / Городской номер</h4>
+    <div class="number-type__col">
+      <div class="number-type__row">Авансовый метод расчетов</div>
+      <div class="number-type__row">Тариф открыт для подключения с 24.07.2017</div>
+      <div class="number-type__row">Тариф открыт для перехода с 24.07.2017</div>
+    </div>
+    <div class="number-type__col">
+      <div class="benefits">
+        <% data.header.benefits.forEach((benefit, index) => { %>
+          <div class="benefits__line"><%= benefit.Title %></div>
+        <% }) %>
+      </div>
+    </div>
+    <div class="number-type__row number-type__row--focus number-type__row--border">Неиспользованные остатки пакетов интернета, минут, SMS переносятся на следующий месяц. Действует на территории всей России
+    </div>
+    <div class="number-type__row number-type__row--focus">«Пакет безопасности» - набор бесплатных услуг и сервисов, которые защитят телефон. Узнать подробнее - на www.mts.ru/safe
+    </div>
+  </div>
+</div>

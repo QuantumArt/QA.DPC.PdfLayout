@@ -9,7 +9,14 @@
   </style>
 </head>
 <body>
-  <%- include('parts/header') %>
-  <%- include('parts/tableGeneric') %>
+  <div class="wrap">
+    <%- include('parts/header') %>
+    <%- include('parts/tariffInfo') %>
+    <table class="main-table">
+      <%- include('parts/tableGeneric') %>
+      <%- include('parts/tableStatic') %>
+    </table>
+    <%- include('parts/footnotes') %>
+  </div>
 </body>
 </html>

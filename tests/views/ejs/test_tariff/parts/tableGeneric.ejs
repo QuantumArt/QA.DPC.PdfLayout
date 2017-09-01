@@ -1,0 +1,43 @@
+<% Object.keys(data.body.params).forEach((group, index) => { %>
+  <tbody class="parameter-group" style="page-break-inside: avoid">
+    <tr>
+      <th colspan="2">
+        <h3><%= index + 1 %>. <%= group %></h3>
+      </th>
+    </tr>
+  </tbody>
+  <% for (let parent in data.body.params[group]) { %>
+    <% if (parent === 'parentless') { %>
+      <% data.body.params[group][parent].forEach((param) => { %>
+        <tbody class="parameter-block" style="page-break-inside: avoid">
+          <tr class="parameter">
+            <td class="parameter-description">
+              <%= param.Title %>
+            </td>
+            <td class="parameter-value">
+              <%= param.NumValue %> <%= param.Unit.Display %>
+            </td>
+          </tr>
+        </tbody>
+      <% }) %>
+    <% } else { %>
+      <% data.body.params[group][parent].forEach((param) => { %>
+        <tbody class="parameter-block" style="page-break-inside: avoid">
+          <tr class="parameter-parent" >
+            <td colspan="2">
+              <h4><%= parent %></h4>
+            </td>
+          </tr>
+          <tr class="parameter">
+            <td class="parameter-description">
+              <%= param.Title %>
+            </td>
+            <td class="parameter-value">
+              <%= param.NumValue %> <%= param.Unit.Display %>
+            </td>
+          </tr>
+        </tbody>
+      <% }) %>
+    <% } %>
+  <% } %>
+<% }) %>
