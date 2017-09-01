@@ -5,11 +5,10 @@
   "scripts": {
     "static": "http-server ./output --p 8081",
     "testdata": "http-server ./tests/testdata --p 8082",
-    "generate:pug": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/pug/test_tariff -e pug",
-    "generate:hbs": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/handlebars/test_tariff -e handlebars",
-    "generate:dot": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/dot/test_tariff -e dot",
-    "generate:ejs": "node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/ejs/test_tariff -e ejs",
-    "api": "node server.js"
+    "generate:hbs": "cross-env NODE_ENV=development node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/handlebars/test_tariff -e handlebars",
+    "generate:ejs": "cross-env NODE_ENV=development node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/ejs/test_tariff -e ejs",
+    "api:dev": "cross-env NODE_ENV=development node server.js",
+    "api:prod": "cross-env NODE_ENV=production node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +16,7 @@
     "body-parser": "^1.17.2",
     "config": "^1.26.1",
     "consolidate": "^0.14.5",
+    "cross-env": "^5.0.5",
     "dot": "^1.1.2",
     "ejs": "^2.5.7",
     "express": "^4.15.4",

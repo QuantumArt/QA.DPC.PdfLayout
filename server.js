@@ -34,5 +34,6 @@ app.use('/testdata', express.static('tests/testdata'));
 
 const apiPort = config.get('apiPort');
 app.listen(apiPort, () => {
+  console.log(`NODE_ENV: ${config.util.getEnv('NODE_ENV')}`);
   console.log(`listening on port ${apiPort}`);
 });

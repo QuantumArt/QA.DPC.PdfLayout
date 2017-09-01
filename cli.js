@@ -32,6 +32,8 @@ const logger = require('./logger');
 const compiler = require('./compiler');
 // console.log(argv);
 
+console.log(`NODE_ENV: ${config.util.getEnv('NODE_ENV')}`);
+
 try {
   const {
     basePath,

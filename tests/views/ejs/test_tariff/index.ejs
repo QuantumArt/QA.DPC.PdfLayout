@@ -5,18 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Ejs</title>
   <style type="text/css">
-    @font-face {
-      font-family: 'Corpid';
-      font-weight: 700;
-      font-style: normal;
-      src: url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.woff2') format('woff2'),
-          url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.woff') format('woff'),
-          url('https://static.ssl.mts.ru/upload/images/main_2017/68076/f/css/fonts/corpid/CorpidE1SCd_Regular.ttf') format('truetype');
-    }
+    <%- style %>
   </style>
 </head>
 <body>
   <%- include('parts/header') %>
-  <%- include('parts/mainTable') %>
+  <%- include('parts/tableGeneric') %>
 </body>
 </html>
