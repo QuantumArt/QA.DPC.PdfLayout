@@ -33,8 +33,7 @@ module.exports = async (options) => {
   // };
 
   try {
-    const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData
-      .timestamp}`;
+    const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}`;
     const tariffDataOptions = {
       lockKey: tariffKey,
       fileUrl: options.tariffData.downloadUrl,
@@ -46,8 +45,7 @@ module.exports = async (options) => {
 
     console.log(`tariffOptions: ${stringToObj(tariffDataOptions)}`);
 
-    const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData
-      .timestamp}`;
+    const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}`;
     const mapperDataOptions = {
       lockKey: mapperKey,
       fileUrl: options.mapperData.downloadUrl,
@@ -63,8 +61,7 @@ module.exports = async (options) => {
 
     // await downloader(mapperDataOptions);
 
-    const templateKey = `template_${options.templateData.id}_${options
-      .templateData.timestamp}`;
+    const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}`;
     const templateDataOptions = {
       lockKey: templateKey,
       fileUrl: options.templateData.downloadUrl,

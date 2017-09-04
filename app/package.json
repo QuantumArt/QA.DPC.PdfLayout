@@ -9,10 +9,11 @@
   "scripts": {
     "static": "http-server ./output --p 8081",
     "testdata": "http-server ./test/fixtures --p 8082",
-    "generate:hbs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper.js -t views/handlebars/test_tariff -e handlebars",
-    "generate:ejs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper.js -t views/ejs/test_tariff -e ejs",
+    "generate:hbs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper -t views/handlebars/test_tariff -e handlebars",
+    "generate:ejs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper -t views/ejs/test_tariff -e ejs",
     "api:dev": "cross-env NODE_ENV=development node server.js",
-    "api:prod": "cross-env NODE_ENV=production node server.js"
+    "api:prod": "cross-env NODE_ENV=production node server.js",
+    "test:unit": "mocha"
   },
   "author": "",
   "license": "ISC",
@@ -20,12 +21,10 @@
     "body-parser": "^1.17.2",
     "config": "^1.26.1",
     "consolidate": "^0.14.5",
-    "cross-env": "^5.0.5",
     "dot": "^1.1.2",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
     "handlebars": "^4.0.10",
-    "http-server": "^0.10.0",
     "jsonfile-promised": "0.0.1",
     "lockfile": "^1.0.3",
     "lodash": "^4.17.4",
@@ -45,9 +44,11 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "cross-env": "^5.0.5",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
+    "http-server": "^0.10.0",
     "mocha": "^3.5.0",
     "sinon": "^3.2.1"
   }

@@ -7,6 +7,8 @@ const app = express();
 
 const jsonParser = bodyParser.json();
 
+app.get('/', (req, res) => { res.send('Ready for reqests'); });
+
 app.post('/generate', jsonParser, async (req, res) => {
   if (!req.body) {
     return res.sendStatus(400);
@@ -30,7 +32,7 @@ app.post('/generate', jsonParser, async (req, res) => {
 });
 
 app.use('/output', express.static('output'));
-app.use('/testdata', express.static('tests/testdata'));
+app.use('/testdata', express.static('test/fixtures'));
 
 const apiPort = config.get('apiPort');
 app.listen(apiPort, () => {
