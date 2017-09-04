@@ -1,12 +1,16 @@
 {
   "name": "templating",
   "version": "1.0.0",
-  "description": "",
+  "description": "QA.DPC.PdfLayout",
+  "repository": {
+    "type": "git",
+    "url": "http://tfs01:8080/tfs/QuantumartCollection/QA.DPC/_git/QA.DPC.PdfLayout"
+  },
   "scripts": {
     "static": "http-server ./output --p 8081",
-    "testdata": "http-server ./tests/testdata --p 8082",
-    "generate:hbs": "cross-env NODE_ENV=development node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/handlebars/test_tariff -e handlebars",
-    "generate:ejs": "cross-env NODE_ENV=development node cli -b tests -d testdata/tariff.json -m testdata/mapper.js -t views/ejs/test_tariff -e ejs",
+    "testdata": "http-server ./test/fixtures --p 8082",
+    "generate:hbs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper.js -t views/handlebars/test_tariff -e handlebars",
+    "generate:ejs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper.js -t views/ejs/test_tariff -e ejs",
     "api:dev": "cross-env NODE_ENV=development node server.js",
     "api:prod": "cross-env NODE_ENV=production node server.js"
   },
@@ -29,8 +33,6 @@
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^5.0.1",
     "node-fetch": "^1.7.1",
-    "postcss": "^6.0.8",
-    "postcss-url": "^7.1.1",
     "promisepipe": "^2.0.0",
     "proper-lockfile": "^2.0.1",
     "pug": "^2.0.0-rc.2",
@@ -42,8 +44,11 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.0",
+    "sinon": "^3.2.1"
   }
 }
