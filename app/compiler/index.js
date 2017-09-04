@@ -26,7 +26,8 @@ const compile = async (options) => {
   try {
     /* eslint-disable global-require */
     const rawData = await jsonfilePromised.readFile(options.tariffJsonPath);
-    const mapData = await readFile(path.normalize(options.mapperPath), 'utf-8');
+    const mapData = await readFile(`${path.normalize(options.mapperPath)}/index.js`, 'utf-8');
+    console.log(options.mapperPath);
     let data;
     try {
       const secureMap = vm.run(mapData);
