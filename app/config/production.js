@@ -7,7 +7,7 @@ module.exports = {
   mappersPath: path.join(workdirBase, 'mappers'),
   viewsPath: path.join(workdirBase, 'views'),
   tariffJsonPath: path.join(workdirBase, 'tariffs'),
-  output: path.join(workdirBase, 'output'),
+  output: path.resolve('output'),
   logs: path.resolve('c:/logs/QA.DPC.Node.PdfGenerator'),
   locks: {
     root: path.join(workdirBase, 'lockfiles'),
