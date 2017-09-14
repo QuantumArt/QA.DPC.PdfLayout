@@ -33,7 +33,7 @@ module.exports = async (options) => {
   // };
 
   try {
-    const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}`;
+    const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}_${options.tariffData.siteMode || 'live'}`;
     const tariffDataOptions = {
       lockKey: tariffKey,
       fileUrl: options.tariffData.downloadUrl,
@@ -45,7 +45,7 @@ module.exports = async (options) => {
 
     console.log(`tariffOptions: ${stringToObj(tariffDataOptions)}`);
 
-    const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}`;
+    const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}_${options.mapperData.siteMode || 'live'}`;
     const mapperDataOptions = {
       lockKey: mapperKey,
       fileUrl: options.mapperData.downloadUrl,
@@ -61,7 +61,7 @@ module.exports = async (options) => {
 
     // await downloader(mapperDataOptions);
 
-    const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}`;
+    const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}_${options.templateData.siteMode || 'live'}`;
     const templateDataOptions = {
       lockKey: templateKey,
       fileUrl: options.templateData.downloadUrl,
@@ -85,7 +85,7 @@ module.exports = async (options) => {
 
     const outputName = `${options.tariffData.id}_${options.tariffData
       .timestamp}/${options.mapperData.id}_${options.mapperData
-      .timestamp}/${options.templateData.id}_${options.templateData.timestamp}`;
+      .timestamp}/${options.templateData.id}_${options.templateData.timestamp}_${options.templateData.siteMode || 'live'}`;
 
     await compiler({
       tariffJsonPath: path.join(
