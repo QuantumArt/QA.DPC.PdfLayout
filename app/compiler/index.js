@@ -22,20 +22,24 @@ const vm = new NodeVM({
 //   engine: 'pug',
 // };
 
+const mapProduct = async (options) => {
+  const rawData = await jsonfilePromised.readFile(options.tariffJsonPath);
+  const mapData = await readFile(`${path.normalize(options.mapperPath)}/index.js`, 'utf-8');
+  console.log(options.mapperPath);
+  let data;
+  try {
+    const secureMap = vm.run(mapData);
+    data = secureMap(rawData);
+  } catch (error) {
+    logger.error('Error with mapper', error);
+    throw error;
+  }
+  return data;
+};
+
 const compile = async (options) => {
   try {
-    /* eslint-disable global-require */
-    const rawData = await jsonfilePromised.readFile(options.tariffJsonPath);
-    const mapData = await readFile(`${path.normalize(options.mapperPath)}/index.js`, 'utf-8');
-    console.log(options.mapperPath);
-    let data;
-    try {
-      const secureMap = vm.run(mapData);
-      data = secureMap(rawData);
-    } catch (error) {
-      logger.error('Error with mapper', error);
-      throw error;
-    }
+    const data = await mapProduct(options);
     await render({
       engine: options.engine,
       templatePath: options.templatePath,
@@ -48,4 +52,5 @@ const compile = async (options) => {
   }
 };
 
-module.exports = compile;
+module.exports.compile = compile;
+module.exports.mapProduct = mapProduct;

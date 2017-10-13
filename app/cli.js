@@ -29,7 +29,7 @@ const argv = require('yargs')
   .help()
   .argv;
 const logger = require('./logger');
-const compiler = require('./compiler');
+const compiler = require('./compiler').compile;
 // console.log(argv);
 
 console.log(`NODE_ENV: ${config.util.getEnv('NODE_ENV')}`);

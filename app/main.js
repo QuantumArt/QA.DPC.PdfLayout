@@ -1,7 +1,8 @@
 const downloader = require('./downloader');
 const path = require('path');
 const config = require('config');
-const compiler = require('./compiler');
+const compiler = require('./compiler').compile;
+const productMapper = require('./compiler').mapProduct;
 const stringToObj = require('stringify-object');
 // const options = {
 //   tariffData: {
@@ -22,7 +23,55 @@ const stringToObj = require('stringify-object');
 //   templateEngine: 'pug',
 // };
 
-module.exports = async (options) => {
+const getTariffDataOptions = (options) => {
+  const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}_${options.tariffData.siteMode || 'live'}`;
+  const result = {
+    lockKey: tariffKey,
+    fileUrl: options.tariffData.downloadUrl,
+    isZip: false,
+    isFolder: false,
+    destinationRootFolder: config.get('tariffJsonPath'),
+    destinationName: `${tariffKey}.json`,
+  };
+
+  console.log(`tariffOptions: ${stringToObj(result)}`);
+  return result;
+};
+
+const getMapperDataOptions = (options) => {
+  const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}_${options.mapperData.siteMode || 'live'}`;
+  const mapperDataOptions = {
+    lockKey: mapperKey,
+    fileUrl: options.mapperData.downloadUrl,
+    isZip: false,
+    isFolder: false,
+    destinationRootFolder: path.join(config.get('mappersPath'), mapperKey),
+    destinationName: 'index.js',
+  };
+
+  console.log(`mapperOptions: ${stringToObj(mapperDataOptions)}`);
+  return mapperDataOptions;
+};
+
+const getTemplateDataOptions = (options) => {
+  const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}_${options.templateData.siteMode || 'live'}`;
+  const templateDataOptions = {
+    lockKey: templateKey,
+    fileUrl: options.templateData.downloadUrl,
+    isZip: true,
+    isFolder: true,
+    destinationRootFolder: path.join(
+      config.get('viewsPath'),
+      options.templateEngine,
+    ),
+    destinationName: templateKey,
+  };
+
+  console.log(`templateOptions: ${stringToObj(templateDataOptions)}`);
+  return templateDataOptions;
+};
+
+const generateHtml = async (options) => {
   // var options = {
   //     lockKey : 'template_pug_1488_1502106030',
   //     downloadUrl: 'http://blabla/template_1488',
@@ -33,49 +82,9 @@ module.exports = async (options) => {
   // };
 
   try {
-    const tariffKey = `tariff_${options.tariffData.id}_${options.tariffData.timestamp}_${options.tariffData.siteMode || 'live'}`;
-    const tariffDataOptions = {
-      lockKey: tariffKey,
-      fileUrl: options.tariffData.downloadUrl,
-      isZip: false,
-      isFolder: false,
-      destinationRootFolder: config.get('tariffJsonPath'),
-      destinationName: `${tariffKey}.json`,
-    };
-
-    console.log(`tariffOptions: ${stringToObj(tariffDataOptions)}`);
-
-    const mapperKey = `mapper_${options.mapperData.id}_${options.mapperData.timestamp}_${options.mapperData.siteMode || 'live'}`;
-    const mapperDataOptions = {
-      lockKey: mapperKey,
-      fileUrl: options.mapperData.downloadUrl,
-      isZip: false,
-      isFolder: false,
-      destinationRootFolder: path.join(config.get('mappersPath'), mapperKey),
-      destinationName: 'index.js',
-    };
-
-    console.log(`mapperOptions: ${stringToObj(mapperDataOptions)}`);
-
-    // console.log('downloaded mapper');
-
-    // await downloader(mapperDataOptions);
-
-    const templateKey = `template_${options.templateData.id}_${options.templateData.timestamp}_${options.templateData.siteMode || 'live'}`;
-    const templateDataOptions = {
-      lockKey: templateKey,
-      fileUrl: options.templateData.downloadUrl,
-      isZip: true,
-      isFolder: true,
-      destinationRootFolder: path.join(
-        config.get('viewsPath'),
-        options.templateEngine,
-      ),
-      destinationName: templateKey,
-    };
-
-    console.log(`templateOptions: ${stringToObj(templateDataOptions)}`);
-    // await downloader(templateDataOptions);
+    const tariffDataOptions = getTariffDataOptions(options);
+    const mapperDataOptions = getMapperDataOptions(options);
+    const templateDataOptions = getTemplateDataOptions(options);
 
     await Promise.all([
       downloader(tariffDataOptions),
@@ -108,13 +117,25 @@ module.exports = async (options) => {
   }
 };
 
-// module.exports = function (callback, tariff, url, engine, pdf) {
-//     try {
-//         const compiler = require(`./controls/${tariff}`);
-//         compiler(tariff, url, engine, pdf);
-//         callback(null, 1);
-//     } catch (error) {
-//         logger.error('Error from App.js', error);
-//     }
-//     //callback(null,1);
-// }
+const previewJson = async (options) => {
+  const tariffDataOptions = getTariffDataOptions(options);
+  const mapperDataOptions = getMapperDataOptions(options);
+
+  await Promise.all([
+    downloader(tariffDataOptions),
+    downloader(mapperDataOptions),
+  ]);
+
+  const result = await productMapper({
+    tariffJsonPath: path.join(
+      tariffDataOptions.destinationRootFolder,
+      tariffDataOptions.destinationName,
+    ),
+    mapperPath: mapperDataOptions.destinationRootFolder,
+  });
+
+  return result;
+};
+
+module.exports.generateHtml = generateHtml;
+module.exports.previewJson = previewJson;

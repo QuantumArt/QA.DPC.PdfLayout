@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const main = require('./main');
+const htmlGenerator = require('./main').generateHtml;
+const productMapper = require('./main').previewJson;
 const config = require('config');
 
 const app = express();
@@ -16,10 +17,32 @@ app.post('/generate', jsonParser, async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   const options = req.body;
   try {
-    const outputPath = await main(options);
+    const outputPath = await htmlGenerator(options);
     const resp = {
       success: true,
       relativePath: outputPath,
+    };
+    return res.send(JSON.stringify(resp));
+  } catch (e) {
+    const resp = {
+      success: false,
+      error: e,
+    };
+    return res.status(500).send(JSON.stringify(resp));
+  }
+});
+
+app.post('/previewJson', jsonParser, async (req, res) => {
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+  res.setHeader('Content-Type', 'application/json');
+  const options = req.body;
+  try {
+    const result = await productMapper(options);
+    const resp = {
+      success: true,
+      jsonString: JSON.stringify(result),
     };
     return res.send(JSON.stringify(resp));
   } catch (e) {
