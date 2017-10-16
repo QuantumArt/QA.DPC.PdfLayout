@@ -28,6 +28,7 @@ const getTariffDataOptions = (options) => {
   const result = {
     lockKey: tariffKey,
     fileUrl: options.tariffData.downloadUrl,
+    forceDownload: options.tariffData.forceDownload,
     isZip: false,
     isFolder: false,
     destinationRootFolder: config.get('tariffJsonPath'),
@@ -43,6 +44,7 @@ const getMapperDataOptions = (options) => {
   const mapperDataOptions = {
     lockKey: mapperKey,
     fileUrl: options.mapperData.downloadUrl,
+    forceDownload: options.mapperData.forceDownload,
     isZip: false,
     isFolder: false,
     destinationRootFolder: path.join(config.get('mappersPath'), mapperKey),
@@ -58,6 +60,7 @@ const getTemplateDataOptions = (options) => {
   const templateDataOptions = {
     lockKey: templateKey,
     fileUrl: options.templateData.downloadUrl,
+    forceDownload: options.templateData.forceDownload,
     isZip: true,
     isFolder: true,
     destinationRootFolder: path.join(

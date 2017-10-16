@@ -22,10 +22,17 @@ const createMarkerFile = (markerPath) => {
   console.log(`created marker ${markerPath}`);
 };
 
+const deleteMarkerFile = (markerPath) => {
+  console.log(`deleting marker ${markerPath}`);
+  fs.unlinkSync(markerPath);
+  console.log(`deleted marker ${markerPath}`);
+};
+
 
 // var options = {
 //     lockKey : 'template_pug_1488_1502106030', 
 //     fileUrl: 'http://blabla/template_1488',
+//     forceDownload: false,
 //     isZip : true,
 //     isFolder: true,
 //     destinationRootFolder: '/views/pug/',
@@ -50,7 +57,7 @@ const workflow = async (options) => {
       await mkdirp(options.destinationRootFolder);
     }
     console.log(`first check: completed: ${existStatus}`);
-    if (existStatus) {
+    if (existStatus && !options.forceDownload) {
       return;
     }
     const lockfileOptions = {
@@ -60,9 +67,13 @@ const workflow = async (options) => {
 
 
     await promisifiedLock(inprogressMarkerPath, lockfileOptions);
-    locked = true;
-
     console.log(`acquired lock on ${inprogressMarkerPath}`);
+    const completedMarkerPath = path.join(completedMarkersDir, markerKey);
+    locked = true;
+    if (existStatus && options.forceDownload) {
+      deleteMarkerFile(completedMarkerPath);
+    }
+
     existStatus = await checkCompleted(markerKey);
     console.log(`second check: completed: ${existStatus}`);
     if (existStatus) {
@@ -82,7 +93,7 @@ const workflow = async (options) => {
       fs.unlinkSync(saveFilePath);
     }
 
-    const completedMarkerPath = path.join(completedMarkersDir, markerKey);
+
     createMarkerFile(completedMarkerPath);
     lockFile.unlock(inprogressMarkerPath);
   } catch (e) {
