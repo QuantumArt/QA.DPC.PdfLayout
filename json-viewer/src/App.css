@@ -1,0 +1,60 @@
+html, body {
+  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.loading {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  margin: -40px 0 0 -40px;
+}
+
+.main, .error {
+  padding: 50px 0;
+}
+
+.json-viewer {
+  text-align: left;
+  border: 1px solid #f3f1f1;
+  border-radius: 4px;
+}
+
+.navbar {
+  background-color: inherit;
+}
+
+.button {
+  margin-right: 15px;
+}
+
+.invert-button {
+  margin-right: 25px;
+}
+
+.theme-options {
+  margin-right: 10px;
+}
+
+.Dropdown-control  {
+  padding-top: calc(0.375em - 1px);
+  padding-bottom: calc(0.375em - 1px);
+  border-radius: 3px;
+  min-width: 130px;
+}
+
+.Dropdown-menu {
+  text-align: left;
+}
+
+.raw {
+  text-align: left;
+}
+
+.raw-word-wrap {
+  white-space: pre-wrap;
+}
