@@ -9,8 +9,8 @@
   "scripts": {
     "static": "http-server ./output --p 8081",
     "testdata": "http-server ./test/fixtures --p 8082",
-    "generate:hbs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper -t views/handlebars/test_tariff -e handlebars",
-    "generate:ejs": "cross-env NODE_ENV=development node cli -b test -d fixtures/tariff.json -m fixtures/mapper -t views/ejs/test_tariff -e ejs",
+    "generate:test-tariff:hbs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test-tariff.json -m fixtures/mappers/test-tariff -t views/handlebars/test_tariff -e handlebars",
+    "generate:test-tariff:ejs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test-tariff.json -m fixtures/mappers/test-tariff -t views/handlebars/test_tariff -e ejs",
     "api:dev": "cross-env NODE_ENV=development node server.js",
     "api:prod": "cross-env NODE_ENV=production node server.js",
     "test:unit": "mocha"
