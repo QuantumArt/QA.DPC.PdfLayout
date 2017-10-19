@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropdown from 'react-dropdown';
 import JSONTree from 'react-json-tree';
-import { createStyling } from 'react-base16-styling';
+import { createStyling, invertTheme } from 'react-base16-styling';
 import 'bulma/css/bulma.css';
 import 'react-dropdown/style.css';
 
@@ -22,7 +22,7 @@ class App extends Component {
       showRaw: false,
       wordWrap: true,
       theme: themes.monokai,
-      invertTheme: false,
+      inverted: false,
       showType: true,
     };
 
@@ -91,7 +91,7 @@ class App extends Component {
   }
 
   invert = () => {
-    this.setState({ invertTheme: !this.state.invertTheme });
+    this.setState({ inverted: !this.state.inverted });
   }
 
   render() {
@@ -104,15 +104,22 @@ class App extends Component {
       wordWrap,
       data,
       theme,
-      invertTheme,
+      inverted,
     } = this.state;
 
-    const styling = createStyling(() => ({
+    const getTheme = () => {
+      if (inverted) {
+        return invertTheme(theme);
+      }
+      return theme;
+    };
+
+    const styling = createStyling(base16Theme => ({
       pre: {
-        backgroundColor: theme.base00,
-        color: theme.base0B,
+        backgroundColor: base16Theme.base00,
+        color: base16Theme.base0B,
       },
-    }), {}, theme);
+    }), {}, getTheme());
 
     if (!loaded) {
       return (
@@ -121,7 +128,9 @@ class App extends Component {
     }
     if (error) {
       return (
-        <h1 className="error has-text-centered has-text-danger is-size-4">
+        <h1
+          className="error has-text-centered has-text-danger is-size-4 has-text-weight-semibold"
+        >
           {errorMsg}
         </h1>
       );
@@ -130,33 +139,31 @@ class App extends Component {
     return (
       <div className="container has-text-centered main">
         <nav className="navbar">
-          <div className="navbart-menu">
-            <div className="navbar-end">
-              <Dropdown
-                className="theme-options"
-                options={this.themesNames}
-                onChange={this.setTheme}
-                placeholder={theme.scheme}
-              />
-              <button className="button invert-button" onClick={this.invert}>
-                Invert
-              </button>
-              <button className="button" onClick={this.toggleType}>
-                Toggle types
-              </button>
-              <button className="button" onClick={this.toggleRaw}>
-                {showRaw ? 'Show formatted' : 'Show raw'}
-              </button>
-              {showRaw &&
-                <button
-                  className={wordWrap ? 'button is-success' : 'button'}
-                  onClick={this.togleWordWrap}
-                >
-                  {wordWrap ? 'Word wrap is on' : 'Word wrap is off'}
-                </button>
-              }
-            </div>
-          </div>
+          <Dropdown
+            className="theme-options"
+            options={this.themesNames}
+            onChange={this.setTheme}
+            placeholder={theme.scheme}
+          />
+          <button className="button invert-button" onClick={this.invert}>
+            Invert
+          </button>
+          {!showRaw &&
+            <button className="button" onClick={this.toggleType}>
+              Toggle types
+            </button>
+          }
+          <button className="button is-info" onClick={this.toggleRaw}>
+            {showRaw ? 'Show formatted' : 'Show raw'}
+          </button>
+          {showRaw &&
+            <button
+              className={wordWrap ? 'button is-success' : 'button'}
+              onClick={this.togleWordWrap}
+            >
+              {wordWrap ? 'Word wrap is on' : 'Word wrap is off'}
+            </button>
+          }
         </nav>
         {showRaw ? (
           <pre
@@ -169,7 +176,7 @@ class App extends Component {
           <div className="json-viewer">
             <JSONTree
               data={data}
-              invertTheme={invertTheme}
+              invertTheme={inverted}
               getItemString={this.getItemString}
               theme={{
                 extend: theme,

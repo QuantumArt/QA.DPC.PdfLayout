@@ -38,6 +38,7 @@ html, body {
 
 .theme-options {
   margin-right: 10px;
+  display: inline-block;
 }
 
 .Dropdown-control  {
@@ -53,6 +54,8 @@ html, body {
 
 .raw {
   text-align: left;
+  border: 1px solid #f3f1f1;
+  border-radius: 4px;
 }
 
 .raw-word-wrap {
