@@ -9,8 +9,9 @@
   "scripts": {
     "static": "http-server ./output --p 8081",
     "testdata": "http-server ./test/fixtures --p 8082",
-    "generate:test-tariff:hbs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test-tariff.json -m fixtures/mappers/test-tariff -t views/handlebars/test_tariff -e handlebars",
-    "generate:test-tariff:ejs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test-tariff.json -m fixtures/mappers/test-tariff -t views/handlebars/test_tariff -e ejs",
+    "generate:test_tariff:hbs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test_tariff.json -m fixtures/mappers/test_tariff -t views/handlebars/test_tariff -e handlebars",
+    "generate:test_tariff:ejs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/test_tariff.json -m fixtures/mappers/test_tariff -t views/handlebars/test_tariff -e ejs",
+    "generate:aviarouming:hbs": "cross-env NODE_ENV=development node cli -b ./test -d fixtures/data/aviarouming.json -m fixtures/mappers/aviarouming -t views/handlebars/aviarouming -e handlebars",
     "api:dev": "cross-env NODE_ENV=development node server.js",
     "api:prod": "cross-env NODE_ENV=production node server.js",
     "test:unit": "mocha"
