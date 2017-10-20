@@ -5,15 +5,11 @@
         <tbody>
           <tr>
             <th>
-              <h3>Опции роуминга</h3>
+              <h3>Активная опция</h3>
             </th>
           </tr>
           {{#each scale.ServicesOnRoamingScale as |service|}}
             {{#if service.IsSelected}}
-              <tr class="options-table--selected">
-                <td>{{service.Service.MarketingProduct.Title}}</td>
-              </tr>
-            {{else}}
               <tr>
                 <td>{{service.Service.MarketingProduct.Title}}</td>
               </tr>
@@ -34,14 +30,25 @@
           </tbody>
           {{#each group as |param paramName|}}
             <tbody class="parameter-block" style="page-break-inside: avoid">
-              <tr class="parameter">
-                <td class="parameter-description">
-                  {{paramName}}
-                </td>
-                <td class="parameter-value">
-                  {{param.NumValue}} {{param.Unit.Display}}
-                </td>
-              </tr>
+              {{#if param.Changed}}
+                <tr class="parameter parameter--changed">
+                  <td class="parameter-description">
+                    {{paramName}}
+                  </td>
+                  <td class="parameter-value">
+                    {{param.NumValue}} {{param.Unit.Display}}
+                  </td>
+                </tr>
+              {{else}}
+                <tr class="parameter">
+                  <td class="parameter-description">
+                    {{paramName}}
+                  </td>
+                  <td class="parameter-value">
+                    {{param.NumValue}} {{param.Unit.Display}}
+                  </td>
+                </tr>
+              {{/if}}
             </tbody>
           {{/each}}
           </tbody>

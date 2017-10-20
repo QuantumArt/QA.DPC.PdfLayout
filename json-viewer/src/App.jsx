@@ -21,8 +21,8 @@ class App extends Component {
       data: {},
       showRaw: false,
       wordWrap: true,
-      theme: themes.monokai,
-      inverted: false,
+      theme: themes.material,
+      inverted: true,
       showType: true,
     };
 
