@@ -439,7 +439,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 1935085,
@@ -1264,7 +1265,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 2141738,
@@ -2190,7 +2192,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 2141795,
@@ -2594,12 +2597,12 @@
           "Group": {
             "Id": 122994,
             "Title": "Обязательные платежи",
-            "SortOrder": 0,
+            "SortOrder": -2,
             "OldSiteId": 36,
             "ImageSvg": {
               "Name": "b-icon_home-account.svg",
-              "FileSizeBytes": 2023,
-              "AbsoluteUrl": "//static.mts.ru/dpc_upload/contents/378/b-icon_home-account.svg"
+              "FileSizeBytes": 0,
+              "AbsoluteUrl": "//spbdev01/mts_catalog/upload/contents/378/b-icon_home-account.svg"
             },
             "Type": "ParameterGroup"
           },
@@ -2878,8 +2881,8 @@
             "OldSiteId": 12,
             "ImageSvg": {
               "Name": "b-icon_mobile-internet.svg",
-              "FileSizeBytes": 2305,
-              "AbsoluteUrl": "//static.mts.ru/dpc_upload/contents/378/b-icon_mobile-internet.svg"
+              "FileSizeBytes": 0,
+              "AbsoluteUrl": "//spbdev01/mts_catalog/upload/contents/378/b-icon_mobile-internet.svg"
             },
             "Type": "ParameterGroup"
           },
@@ -3116,7 +3119,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 2141958,
@@ -4042,7 +4046,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         }
       ],
       "ParamsDic": {

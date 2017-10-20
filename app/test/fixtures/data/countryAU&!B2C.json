@@ -1499,7 +1499,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 1935335,
@@ -3138,7 +3139,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 2044118,
@@ -4883,7 +4885,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         },
         {
           "Id": 2044630,
@@ -6522,7 +6525,8 @@
               "Title": "Участвует в калькуляторе роуминга",
               "Alias": "CalculateInRoaming"
             }]
-          }
+          },
+          "IsSelected": true
         }
       ],
       "ParamsDic": {

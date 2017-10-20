@@ -28,6 +28,33 @@ body {
   position: relative;
 }
 
+.line {
+  margin-top: 35px;
+}
+
+.line:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.line + .line {
+  margin-top: 75px;
+}
+
+.col {
+  float: left;
+}
+
+.col:first-child {
+  width: 24.4%;
+  margin-right: 5px;
+}
+
+.col:last-child {
+  width: 75%;
+}
+
 h1 {
   text-align: center;
 }
@@ -68,33 +95,14 @@ h4 {
   text-align: center;
 }
 
-.number-type__header {
-  color: #e30611;
-  font-weight: 700;
-  margin-bottom: 20px;
+.country-description{
+  margin-top: 25px;
 }
 
-.number-type__col {
-  display: inline-block;
-  max-width: 50%;
-}
-
-.number-type__row {
-  padding: 3px 0;
-  font-size: 14px;
-}
-
-.number-type__row--focus {
-  font-weight: 700;
-  font-size: 15px;
-  color: #e30611;
-  padding: 25px 0;
-  margin-top: 10px;
-}
-
-.number-type__row--border {
-  border-top: 1px solid #dfe0e0;
-  border-bottom: 1px solid #dfe0e0;
+.country-description__line {
+  display: block;
+  position: relative;
+  padding: 5px 0;
 }
 
 .benefits {
@@ -104,9 +112,29 @@ h4 {
   margin-left: 150px;
 }
 
+.options-table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.options-table th {
+  background-color:#e30611;
+  color: white;
+}
+
+.options-table td {
+  padding: 10px 15px;
+  border: 1px solid #dfe0e0;
+  border-top-color: transparent;
+}
+
+.options-table--selected {
+  background-color: #9a9d9d;
+  color: white;
+}
+
 .main-table {
   width: 100%;
-  margin-top: 25px;
   border-spacing: 0;
 }
 

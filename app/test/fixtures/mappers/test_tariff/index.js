@@ -14,7 +14,7 @@ module.exports = (data) => {
   } = data;
 
   // remove system parameters
-  const cleanParams = _.filter(Parameters, el => el.Group.Alias !== 'SystemGroup');
+  const cleanParams = _.filter(Parameters, el => el.Group && el.Group.Alias !== 'SystemGroup');
   const cleanParamsDic = _.filter(ParamsDic, (el) => {
     if (_.isArray(el)) return _.each(el, subEl => subEl.Group && subEl.Group.Alias !== 'SystemGroup');
 
