@@ -30,7 +30,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const url = 'http://mscservices01:17001/api/productJsonMapper/1713794?category=test';
+    // const url = 'http://mscservices01:17001/api/productJsonMapper/1713794?category=test';
+
+    const urlParams = window.location.search.substring(1);
+    const qParams = urlParams.split('&');
+    const contentId = qParams.filter(el => el.includes('content_item_id='))[0].split('=')[1];
+    const url = `http://mscservices01:17001/api/productJsonMapper/${contentId}?category=test`;
+
     axios
       .get(url)
       .then((res) => {
