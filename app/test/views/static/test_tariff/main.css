@@ -68,6 +68,12 @@ h4 {
   text-align: center;
 }
 
+.country-description__line {
+  display: block;
+  position: relative;
+  padding: 5px 0;
+}
+
 .number-type__header {
   color: #e30611;
   font-weight: 700;
@@ -110,6 +116,10 @@ h4 {
   border-spacing: 0;
 }
 
+.main-table + .main-table {
+  margin-top: 75px;
+}
+
 .main-table td {
   vertical-align: middle;
 }
@@ -128,6 +138,11 @@ h4 {
   font-style: italic;
   font-size: 12px;
   display: block;
+}
+
+.option {
+  background-color:#e30611;
+  color: white;
 }
 
 .parameter-group {

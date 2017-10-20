@@ -5,9 +5,9 @@ const argv = require('yargs')
     alias: 'b',
     describe: 'base path to resources',
   })
-  .option('tariffJsonPath', {
+  .option('jsonPath', {
     alias: 'd',
-    describe: 'tariff data path',
+    describe: 'data path',
   })
   .option('mapperPath', {
     alias: 'm',
@@ -25,7 +25,7 @@ const argv = require('yargs')
     describe: 'specify if add pdf compilation',
     type: 'boolean',
   })
-  .demandOption(['basePath', 'tariffJsonPath', 'mapperPath', 'templatePath', 'engine'], 'Base path, JSON, tariff, template and engine to use are required to start')
+  .demandOption(['basePath', 'jsonPath', 'mapperPath', 'templatePath', 'engine'], 'Base path, JSON, tariff, template and engine to use are required to start')
   .help()
   .argv;
 const logger = require('./logger');
@@ -37,19 +37,20 @@ console.log(`NODE_ENV: ${config.util.getEnv('NODE_ENV')}`);
 try {
   const {
     basePath,
-    tariffJsonPath,
+    jsonPath,
     mapperPath,
     templatePath,
     engine,
   } = argv;
+  const json = path.parse(jsonPath);
 
   (async () => {
     await compiler({
-      tariffJsonPath: path.resolve(basePath, tariffJsonPath),
+      tariffJsonPath: path.resolve(basePath, jsonPath),
       mapperPath: path.resolve(basePath, mapperPath),
       templatePath: path.resolve(basePath, templatePath),
       engine,
-      outputDirName: `test-render-${engine}`,
+      outputDirName: `${json.name}-${engine}`,
     });
   })();
 } catch (error) {

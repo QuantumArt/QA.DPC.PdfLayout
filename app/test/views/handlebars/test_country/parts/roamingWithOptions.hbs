@@ -1,0 +1,53 @@
+{{#each data.body.roamingWithOptions as |scale|}}
+  <div class="line" style="page-break-before: always;">
+    <div class="col">
+      <table class="options-table">
+        <tbody>
+          <tr>
+            <th>
+              <h3>Опции роуминга</h3>
+            </th>
+          </tr>
+          {{#each scale.ServicesOnRoamingScale as |service|}}
+            {{#if service.IsSelected}}
+              <tr class="options-table--selected">
+                <td>{{service.Service.MarketingProduct.Title}}</td>
+              </tr>
+            {{else}}
+              <tr>
+                <td>{{service.Service.MarketingProduct.Title}}</td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <table class="main-table">
+        {{#each scale.Parameters as |group groupName|}}
+          <tbody class="parameter-group" style="page-break-inside: avoid">
+            <tr>
+              <th colspan="2">
+                <h3>{{inc @index}}. {{groupName}}</h3>
+              </th>
+            </tr>
+          </tbody>
+          {{#each group as |param paramName|}}
+            <tbody class="parameter-block" style="page-break-inside: avoid">
+              <tr class="parameter">
+                <td class="parameter-description">
+                  {{paramName}}
+                </td>
+                <td class="parameter-value">
+                  {{param.NumValue}} {{param.Unit.Display}}
+                </td>
+              </tr>
+            </tbody>
+          {{/each}}
+          </tbody>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+{{/each}}
+
