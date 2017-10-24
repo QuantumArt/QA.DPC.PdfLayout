@@ -39,6 +39,7 @@ html, body {
 .theme-options {
   margin-right: 10px;
   display: inline-block;
+  height: 100%;
 }
 
 .Dropdown-control  {
