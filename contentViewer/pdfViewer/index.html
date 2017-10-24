@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>View generated HTML</title>
+  <style>
+    html, body {
+      min-width: 100%;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    #content {
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="content"></div>
+
+  <script>
+    const urlParams = window.location.search.substring(1);
+    const qParams = urlParams.split('&');
+    const contentId = qParams.filter(el => el.includes('content_item_id='))[0].split('=')[1];
+    const url = `http://mscservices01:17001/api/pdf/${contentId}?&category=test&attachment=true`;
+
+    const content = document.querySelector('#content');
+    content.innerHTML=`<object 
+      type="application/pdf"
+      data=${url}
+      width="${window.innerWidth} px"
+      height="${window.innerHeight} px"
+      </object>`;
+  </script>
+</body>
+</html>
