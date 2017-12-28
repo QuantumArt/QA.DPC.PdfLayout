@@ -7,15 +7,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 console.log(process.env.NODE_ENV);
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch', // RHL patch
-    'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
-    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-    './src/index.js', // Your appʼs entry point
-  ],
+  entry: {
+    json: './src/json/index.js',
+    html: './src/html/index.js',
+    pdf: './src/pdf/index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'json-viewer.bundle.js',
+    filename: '[name]/[name]Viewer.bundle.js',
     publicPath: '/',
   },
   resolve: {
@@ -55,7 +54,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
     new WebpackNotifierPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
@@ -63,14 +62,19 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    new CopyWebpackPlugin([{
-      from: './public',
-      to: './',
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: './src/json/index.html',
+        to: './json/',
+      },
+      {
+        from: './src/html/index.html',
+        to: './html/',
+      },
+      {
+        from: './src/pdf/index.html',
+        to: './pdf/',
+      },
+    ]),
   ],
-  devServer: {
-    port: 3000,
-    hot: true,
-    historyApiFallback: true,
-  },
 };

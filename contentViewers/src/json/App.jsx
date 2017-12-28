@@ -6,8 +6,9 @@ import { createStyling, invertTheme } from 'react-base16-styling';
 import 'bulma/css/bulma.css';
 import 'react-dropdown/style.css';
 
+import api from '../shared/api';
 import themes from './themes';
-import loadingIcon from './loadingIcon.svg';
+import loadingIcon from '../shared/loadingIcon.svg';
 import './App.css';
 
 class App extends Component {
@@ -30,11 +31,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const urlParams = window.location.search.substring(1);
-    const qParams = urlParams.split('&');
-    const contentId = qParams.filter(el => el.includes('content_item_id='))[0].split('=')[1];
-    const url = `http://mscservices01:17001/api/productJsonMapper/${contentId}?category=test`;
-    // const url = 'http://mscservices01:17001/api/productJsonMapper/1713794?category=test';
+    const url = api().getMappingUrl();
 
     axios
       .get(url)
