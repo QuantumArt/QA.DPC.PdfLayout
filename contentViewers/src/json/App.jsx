@@ -6,9 +6,11 @@ import { createStyling, invertTheme } from 'react-base16-styling';
 import 'bulma/css/bulma.css';
 import 'react-dropdown/style.css';
 
+import Spinner from '../shared/Spinner';
+import ErrorMessage from '../shared/ErrorMessage';
 import api from '../shared/api';
+import '../shared/reset.css';
 import themes from './themes';
-import loadingIcon from '../shared/loadingIcon.svg';
 import './App.css';
 
 class App extends Component {
@@ -31,7 +33,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const url = api().getMappingUrl();
+    const url = api().json;
 
     axios
       .get(url)
@@ -124,18 +126,10 @@ class App extends Component {
     }), {}, getTheme());
 
     if (!loaded) {
-      return (
-        <img className="loading" src={loadingIcon} alt="Loading..." />
-      );
+      return <Spinner />;
     }
     if (error) {
-      return (
-        <h1
-          className="error has-text-centered has-text-danger is-size-4 has-text-weight-semibold"
-        >
-          {errorMsg}
-        </h1>
-      );
+      return <ErrorMessage msg={errorMsg} />;
     }
 
     return (

@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack --config webpack.config.dev.js --progress --profile --colors --display-error-details && webpack-dev-server --config webpack.config.dev.js --open",
+    "start": "cross-env NODE_ENV=development webpack --config webpack.config.dev.js --progress --profile --colors --display-error-details && webpack-dev-server --config webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --progress --profile --colors --display-error-details"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "bulma": "^0.6.1",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-base16-styling": "^0.5.3",
     "react-dom": "^16.2.0",

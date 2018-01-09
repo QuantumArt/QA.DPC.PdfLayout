@@ -9,14 +9,11 @@
 </head>
 
 <body>
-  <script>
-    const urlParams = window.location.search.substring(1);
-    const qParams = urlParams.split('&');
-    const contentId = qParams.filter(el => el.includes('content_item_id='))[0].split('=')[1];
-    const url = `http://mscservices01:17001/api/pdf/${contentId}?&category=test&attachment=true&asHtml=true`;
-
-    window.location.href = url;
-  </script>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+  <script src="htmlViewer.bundle.js"></script>
 </body>
 
 </html>
