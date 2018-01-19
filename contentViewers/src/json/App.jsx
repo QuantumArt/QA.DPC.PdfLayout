@@ -9,7 +9,6 @@ import 'react-dropdown/style.css';
 import Spinner from '../shared/Spinner';
 import ErrorMessage from '../shared/ErrorMessage';
 import api from '../shared/api';
-import '../shared/reset.css';
 import themes from './themes';
 import './App.css';
 
