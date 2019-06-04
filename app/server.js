@@ -26,7 +26,7 @@ app.post('/generate', jsonParser, async (req, res) => {
   } catch (e) {
     const resp = {
       success: false,
-      error: e,
+      error: e.stack,
     };
     return res.status(500).send(JSON.stringify(resp));
   }
@@ -48,7 +48,7 @@ app.post('/previewJson', jsonParser, async (req, res) => {
   } catch (e) {
     const resp = {
       success: false,
-      error: e,
+      error: e.stack,
     };
     return res.status(500).send(JSON.stringify(resp));
   }

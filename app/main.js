@@ -124,20 +124,22 @@ const previewJson = async (options) => {
   const tariffDataOptions = getTariffDataOptions(options);
   const mapperDataOptions = getMapperDataOptions(options);
 
-  await Promise.all([
-    downloader(tariffDataOptions),
-    downloader(mapperDataOptions),
-  ]);
-
-  const result = await productMapper({
-    tariffJsonPath: path.join(
-      tariffDataOptions.destinationRootFolder,
-      tariffDataOptions.destinationName,
-    ),
-    mapperPath: mapperDataOptions.destinationRootFolder,
-  });
-
-  return result;
+  try {
+    await Promise.all([
+      downloader(tariffDataOptions),
+      downloader(mapperDataOptions),
+    ]);
+    const result = await productMapper({
+      tariffJsonPath: path.join(
+        tariffDataOptions.destinationRootFolder,
+        tariffDataOptions.destinationName,
+      ),
+      mapperPath: mapperDataOptions.destinationRootFolder,
+    });
+    return result;
+  } catch (e) {
+    throw e;
+  }
 };
 
 module.exports.generateHtml = generateHtml;
