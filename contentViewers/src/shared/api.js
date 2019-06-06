@@ -15,7 +15,7 @@ export default function api() {
 
   if (isRoaming) {
     return {
-      json: `${baseUrl}/roamingJsonMapper/?id=${contentItemId}&category=${category}`,
+      json: `${baseUrl}/roamingJsonMapper/${contentItemId}?category=${category}`,
       pdf: `${baseUrl}/roaming/?id=${contentItemId}&category=${category}&attachment=true`,
       html: `${baseUrl}/roaming/?id=${contentItemId}&category=${category}&attachment=true&asHtml=true`,
     };
