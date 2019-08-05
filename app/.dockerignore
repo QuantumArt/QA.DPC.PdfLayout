@@ -1,0 +1,9 @@
+.git
+logs
+node_modules
+test
+workdir
+
+installService.js
+dotnetentry.js
+test.js

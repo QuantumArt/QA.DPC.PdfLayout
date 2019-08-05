@@ -1,14 +1,20 @@
 const path = require('path');
 
-const workdirBase = path.resolve('c:/temp/QA.DPC.Node.PdfGenerator.workdir');
+const workdirBasePath = process.env.WORKDIR_PATH;
+const logsPath = process.env.LOGS_PATH;
+const outputPath = process.env.OUTPUT_PATH;
+
+const workdirBase = path.resolve(workdirBasePath);
 const lockfilesRoot = path.join(workdirBase, 'lockfiles');
 
+
 module.exports = {
+  apiPort: 80,
   mappersPath: path.join(workdirBase, 'mappers'),
   viewsPath: path.join(workdirBase, 'views'),
   tariffJsonPath: path.join(workdirBase, 'tariffs'),
-  output: path.resolve('output'),
-  logs: path.resolve('c:/logs/QA.DPC.Node.PdfGenerator'),
+  output: path.resolve(outputPath),
+  logs: path.resolve(logsPath),
   locks: {
     root: path.join(workdirBase, 'lockfiles'),
     completedroot: path.join(lockfilesRoot, 'completed'),

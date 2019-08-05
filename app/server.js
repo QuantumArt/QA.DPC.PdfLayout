@@ -10,6 +10,8 @@ const jsonParser = bodyParser.json();
 
 app.get('/', (req, res) => { res.send('Ready for reqests'); });
 
+app.get('/ready', (req, res) => { res.send('Ready for reqests'); });
+
 app.post('/generate', jsonParser, async (req, res) => {
   if (!req.body) {
     return res.sendStatus(400);
