@@ -20,7 +20,10 @@ spec:
     spec:
       containers:
       - image: spbdocker03:5000/dpc-pdfgenerator/pdflayout-api:||version||
-        name: pdflayout-api        
+        name: pdflayout-api
+        volumeMounts:
+        - name: output-pv
+          mountPath: /output
         ports:
         - containerPort: 80
         resources: 
@@ -42,7 +45,12 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
-          initialDelaySeconds: 30   
+          initialDelaySeconds: 30
+      volumes:
+        - name: output-pv
+          persistentVolumeClaim:
+            claimName: pdflayout-pvc
+          
 ---
 apiVersion: v1
 kind: Service
@@ -54,4 +62,18 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    app: reporting-api
+    app: pdflayout-api
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pdflayout-api-ingress
+  namespace: dpc-pdfgenerator
+spec:
+  rules:
+  - host: pdflayout-api.dpc-pdfgenerator.dev.qsupport.ru
+    http:
+      paths:
+      - backend:
+          serviceName: pdflayout-api-service
+          servicePort: 80
