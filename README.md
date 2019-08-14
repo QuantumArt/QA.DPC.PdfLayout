@@ -11,7 +11,7 @@
 
 DPC PDF Layout is a node application to prepare data for further PDF generation.
 
-#### 2. Cluster setup <a name="setup"></a>
+## 2. Cluster setup <a name="setup"></a>
 
 Set local path as `/kubernetes`. Then execute commands:
 ```console
