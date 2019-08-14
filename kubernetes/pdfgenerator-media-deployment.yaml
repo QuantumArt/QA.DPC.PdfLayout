@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdfmedia-deployment
+  namespace: dpc-pdfgenerator
+  labels:
+    app: pdfmedia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdfmedia
+  template:
+    metadata:
+      labels:
+        app: pdfmedia
+    spec:
+      containers:
+        - name: media
+          image: nginx
+          volumeMounts:
+          - name: media-pv
+            mountPath: /usr/share/nginx/html
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: media-pv
+          persistentVolumeClaim:
+            claimName: pdflayout-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdfmedia
+  namespace: dpc-pdfgenerator
+spec:
+  type: ClusterIP
+  selector:
+    app: pdfmedia
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pdfmedia
+  namespace: dpc-pdfgenerator
+spec:
+  rules:
+  - host: media.dpc-pdfgenerator.dev.qsupport.ru
+    http:
+      paths:
+      - backend:
+          serviceName: pdfmedia
+          servicePort: 80
