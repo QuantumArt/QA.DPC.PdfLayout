@@ -2,7 +2,7 @@
 
 ## Table of contents
 * [1. Introduction](#introduction)
-* [2. Deployment](#setup)
+* [2. Cluster setup](#setup)
 * [3. Deployment](#deployment)
 * [4. Application](#application)
 * [5. ToDo](#todo)
