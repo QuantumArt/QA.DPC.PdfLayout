@@ -8,7 +8,7 @@ export default function api() {
   const qParams = urlParams.split('&');
   const contentId = qParams.filter(el => el.includes('content_id='))[0].split('=')[1];
   const contentItemId = qParams.filter(el => el.includes('content_item_id='))[0].split('=')[1];
-  const baseUrl = 'http://mscservices01:17001/api';
+  const baseUrl = window.__apiUrl__;
   const category = 'test';
 
   const isRoaming = contentId === contentTypes.roaming;
