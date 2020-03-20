@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pdfmedia-deployment
-  namespace: dpc-pdfgenerator
+  name: pdfmedia
+  namespace: dpc
   labels:
     app: pdfmedia
 spec:
@@ -26,13 +26,13 @@ spec:
       volumes:
         - name: media-pv
           persistentVolumeClaim:
-            claimName: pdflayout-pvc
+            claimName: pdflayout
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: pdfmedia
-  namespace: dpc-pdfgenerator
+  namespace: dpc
 spec:
   type: ClusterIP
   selector:
@@ -41,11 +41,11 @@ spec:
   - port: 80
     targetPort: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: pdfmedia
-  namespace: dpc-pdfgenerator
+  namespace: dpc
 spec:
   rules:
   - host: media.dpc-pdfgenerator.dev.qsupport.ru

@@ -1,8 +1,8 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pdflayout-api-deployment
-  namespace: dpc-pdfgenerator
+  name: pdflayout-api
+  namespace: dpc
 spec:
   replicas: 1
   selector:
@@ -49,14 +49,14 @@ spec:
       volumes:
         - name: output-pv
           persistentVolumeClaim:
-            claimName: pdflayout-pvc
+            claimName: pdflayout
           
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: pdflayout-api-service
-  namespace: dpc-pdfgenerator
+  name: pdflayout-api
+  namespace: dpc
 spec:
   ports:
   - port: 80
@@ -64,16 +64,16 @@ spec:
   selector:
     app: pdflayout-api
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k82.io/v1beta1
 kind: Ingress
 metadata:
-  name: pdflayout-api-ingress
-  namespace: dpc-pdfgenerator
+  name: pdflayout-api
+  namespace: dpc
 spec:
   rules:
   - host: pdflayout-api.dpc-pdfgenerator.dev.qsupport.ru
     http:
       paths:
       - backend:
-          serviceName: pdflayout-api-service
+          serviceName: pdflayout
           servicePort: 80
