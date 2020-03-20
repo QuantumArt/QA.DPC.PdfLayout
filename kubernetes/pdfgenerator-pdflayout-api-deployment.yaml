@@ -64,7 +64,7 @@ spec:
   selector:
     app: pdflayout-api
 ---
-apiVersion: networking.k82.io/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: pdflayout-api
@@ -75,5 +75,5 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: pdflayout
+          serviceName: pdflayout-api
           servicePort: 80
