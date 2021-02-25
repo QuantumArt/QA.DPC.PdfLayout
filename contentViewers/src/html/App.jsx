@@ -83,7 +83,7 @@ class App extends Component {
       <object
         title="generated html"
         type="text/html"
-        data={data}
+        data={data.replace('data:text/html;base64', 'data:text/html;charset=utf-8;base64')}
         width={`${window.innerWidth} px`}
         height={`${window.innerHeight} px`}
       />
