@@ -48,7 +48,7 @@ metadata:
   namespace: dpc
 spec:
   rules:
-  - host: media.dpc-pdfgenerator.dev.qsupport.ru
+  - host: "||media_host||"
     http:
       paths:
       - backend:

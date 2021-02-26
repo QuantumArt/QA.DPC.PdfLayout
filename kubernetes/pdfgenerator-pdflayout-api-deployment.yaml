@@ -19,7 +19,7 @@ spec:
         app: pdflayout-api
     spec:
       containers:
-      - image: spbdocker03:5000/dpc-pdfgenerator/pdflayout-api:||version||
+      - image: "||docker||/dpc-pdfgenerator/pdflayout-api:||version||"
         name: pdflayout-api
         volumeMounts:
         - name: output-pv
@@ -71,7 +71,7 @@ metadata:
   namespace: dpc
 spec:
   rules:
-  - host: pdflayout-api.dpc-pdfgenerator.dev.qsupport.ru
+  - host: "||layout_host||"
     http:
       paths:
       - backend:
