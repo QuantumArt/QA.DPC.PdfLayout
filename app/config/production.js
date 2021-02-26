@@ -10,7 +10,6 @@ const workdirBase = path.resolve(workdirBasePath);
 const lockfilesRoot = path.join(workdirBase, 'lockfiles');
 
 module.exports = {
-  apiPort: 80,
   mappersPath: path.join(workdirBase, 'mappers'),
   viewsPath: path.join(workdirBase, 'views'),
   tariffJsonPath: path.join(workdirBase, 'tariffs'),
