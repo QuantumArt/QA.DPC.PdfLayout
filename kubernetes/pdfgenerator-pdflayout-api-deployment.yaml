@@ -71,7 +71,7 @@ metadata:
   namespace: dpc
 spec:
   rules:
-  - host: "||layout_host||"
+  - host: "||host||"
     http:
       paths:
       - backend:

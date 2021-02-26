@@ -48,7 +48,7 @@ metadata:
   namespace: dpc
 spec:
   rules:
-  - host: "||media_host||"
+  - host: "||host||"
     http:
       paths:
       - backend:
