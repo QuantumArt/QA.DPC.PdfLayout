@@ -1,8 +1,9 @@
 const Service = require('node-windows').Service;
 const path = require('path');
+require('dotenv').config();
 
 const svc = new Service({
-  name: 'QA.DPC.Node.PdfGenerator',
+  name: process.env.SVC_NAME,
   script: path.resolve('server.js'),
 });
 
