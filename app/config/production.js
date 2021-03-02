@@ -1,11 +1,8 @@
 const path = require('path');
 
-const defaultWorkPath = 'c:/temp/QA.DPC.Node.PdfGenerator.workdir';
-const defaultLogsPath = 'c:/Logs/QA.DPC.Node.PdfGenerator';
-const defaultOutputPath = 'output';
-const workdirBasePath = process.env.WORKDIR_PATH || defaultWorkPath;
-const logsPath = process.env.LOGS_PATH || defaultLogsPath;
-const outputPath = process.env.OUTPUT_PATH || defaultOutputPath;
+const workdirBasePath = process.env.WORKDIR_PATH;
+const logsPath = process.env.LOGS_PATH;
+const outputPath = process.env.OUTPUT_PATH;
 const workdirBase = path.resolve(workdirBasePath);
 const lockfilesRoot = path.join(workdirBase, 'lockfiles');
 

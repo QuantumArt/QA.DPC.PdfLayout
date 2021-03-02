@@ -1,7 +1,8 @@
 const path = require('path');
+const defaultPort = 3000;
 
 module.exports = {
-  apiPort: 3000,
+  apiPort:  process.env.PORT || defaultPort,
   engines: {
     pug: {
       ext: 'pug',

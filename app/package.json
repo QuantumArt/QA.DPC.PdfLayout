@@ -23,6 +23,7 @@
     "config": "^1.26.1",
     "consolidate": "^0.14.5",
     "dot": "^1.1.2",
+    "dotenv": "^8.2.0",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
     "handlebars": "^4.0.10",
